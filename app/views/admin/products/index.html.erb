@@ -1,0 +1,30 @@
+<h1>Cupcakes</h1>
+<div class="actions" style="margin-bottom:14px">
+  <%= link_to "+ Novo cupcake", new_admin_product_path, class: "btn" %>
+  <%= form_with url: admin_products_path, method: :get, class: "qty-form" do %>
+    <input type="search" name="q" value="<%= params[:q] %>" placeholder="Buscar" aria-label="Buscar cupcake" style="width:180px">
+  <% end %>
+</div>
+<div class="table-wrap">
+  <table>
+    <thead><tr><th>Nome</th><th>Categoria</th><th class="right">Preço</th><th>Situação</th><th>Estoque (mín.)</th><th></th></tr></thead>
+    <tbody>
+    <% @products.each do |p| %>
+      <tr>
+        <td><%= p.name %></td>
+        <td><%= p.category.name %></td>
+        <td class="right"><%= money(p.price) %></td>
+        <td><%= p.active? ? "Publicado" : "Inativo" %><%= " · oculto (sem estoque)" if p.active? && p.stock.zero? %></td>
+        <td>
+          <%= form_with url: stock_admin_product_path(p), method: :patch, class: "qty-form" do %>
+            <input type="number" name="stock" value="<%= p.stock %>" min="0" aria-label="Estoque de <%= p.name %>" class="<%= 'low' if p.low_stock? %>">
+            <span class="muted">(<%= p.min_stock %>)</span>
+            <button class="btn btn-sm btn-outline" type="submit">OK</button>
+          <% end %>
+        </td>
+        <td><%= link_to "Editar", edit_admin_product_path(p) %></td>
+      </tr>
+    <% end %>
+    </tbody>
+  </table>
+</div>

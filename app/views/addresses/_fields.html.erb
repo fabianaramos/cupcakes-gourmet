@@ -1,0 +1,13 @@
+<div class="row row-2">
+  <div class="field"><%= a.label :cep %><%= a.text_field :cep, required: true, inputmode: "numeric", placeholder: "00000-000", autocomplete: "postal-code" %></div>
+  <div class="field"><%= a.label :state %><%= a.select :state, Address::STATES, { include_blank: "Selecione" }, required: true %></div>
+</div>
+<div class="row row-3">
+  <div class="field"><%= a.label :street %><%= a.text_field :street, required: true, autocomplete: "address-line1" %></div>
+  <div class="field"><%= a.label :number %><%= a.text_field :number, required: true %></div>
+  <div class="field"><%= a.label :complement %><%= a.text_field :complement %></div>
+</div>
+<div class="row row-2">
+  <div class="field"><%= a.label :neighborhood %><%= a.text_field :neighborhood, required: true %></div>
+  <div class="field"><%= a.label :city %><%= a.text_field :city, required: true, autocomplete: "address-level2" %></div>
+</div>

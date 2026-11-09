@@ -1,0 +1,40 @@
+<% content_for :title, "Vitrine · Cupcakes Gourmet" %>
+<h1>Nossa vitrine</h1>
+
+<%= form_with url: products_path, method: :get, class: "filters", role: "search" do %>
+  <div class="field">
+    <label for="q">Buscar por nome, sabor ou ingrediente</label>
+    <input type="search" id="q" name="q" value="<%= @query %>" placeholder="Ex.: chocolate, morango, vegano" list="sugestoes">
+    <datalist id="sugestoes">
+      <% Product.available.pluck(:name).each do |n| %><option value="<%= n %>"><% end %>
+    </datalist>
+  </div>
+  <div class="field">
+    <label for="ordem">Ordenar por</label>
+    <%= select_tag :ordem, options_for_select([["Novidades", "novidades"], ["Mais vendidos", "populares"], ["Menor preço", "menor_preco"], ["Maior preço", "maior_preco"]], params[:ordem]), onchange: "this.form.requestSubmit()" %>
+  </div>
+  <%= hidden_field_tag :categoria, params[:categoria] if params[:categoria].present? %>
+  <button class="btn" type="submit">Buscar</button>
+<% end %>
+
+<nav class="chips" aria-label="Categorias">
+  <%= link_to "Todas", products_path(q: @query.presence, ordem: params[:ordem]), class: "chip #{'on' if params[:categoria].blank?}" %>
+  <% @categories.each do |c| %>
+    <%= link_to c.name, products_path(categoria: c.id, q: @query.presence, ordem: params[:ordem]), class: "chip #{'on' if params[:categoria].to_s == c.id.to_s}" %>
+  <% end %>
+</nav>
+
+<% if @products.any? %>
+  <div class="grid">
+    <%= render partial: "card", collection: @products, as: :product %>
+  </div>
+<% else %>
+  <div class="card empty">
+    <p><strong>Nenhum cupcake encontrado<%= " para “#{@query}”" if @query.present? %>.</strong></p>
+    <p class="muted">Tente outro termo ou confira as sugestões abaixo.</p>
+  </div>
+  <% if @suggestions.present? %>
+    <h2>Talvez você goste</h2>
+    <div class="grid"><%= render partial: "card", collection: @suggestions, as: :product %></div>
+  <% end %>
+<% end %>

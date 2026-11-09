@@ -1,0 +1,38 @@
+<% content_for :title, "#{@product.name} · Cupcakes Gourmet" %>
+<p><%= link_to "← Voltar à vitrine", root_path %></p>
+<div class="detail">
+  <div><%= product_image(@product, "hero-img") %></div>
+  <div>
+    <span class="tag"><%= @product.category.name %></span>
+    <h1><%= @product.name %></h1>
+    <% if (avg = @product.average_rating) %>
+      <p><%= stars(avg) %> <span class="muted"><%= avg %> (<%= pluralize(@reviews.size, "avaliação", plural: "avaliações") %>)</span></p>
+    <% end %>
+    <p class="price" style="font-size:1.6rem;font-weight:700;color:var(--brand)"><%= money(@product.price) %></p>
+    <p><%= @product.description %></p>
+    <div class="allergens" role="note">⚠️ Alérgenos: <%= @product.allergens.presence || "não informado" %></div>
+    <h2>Ingredientes</h2>
+    <p><%= @product.ingredients %></p>
+
+    <%= form_with url: add_cart_path, method: :post, class: "actions" do %>
+      <%= hidden_field_tag :product_id, @product.id %>
+      <label for="quantity">Quantidade</label>
+      <input type="number" id="quantity" name="quantity" value="1" min="1" max="<%= [50, @product.stock].min %>" style="width:80px;padding:8px;border-radius:8px;border:1px solid #cdbcc2">
+      <button class="btn" type="submit">Adicionar ao carrinho</button>
+    <% end %>
+    <p class="muted"><%= @product.stock %> unidades disponíveis</p>
+  </div>
+</div>
+
+<h2>Avaliações de clientes</h2>
+<% if @reviews.any? %>
+  <% @reviews.each do |r| %>
+    <div class="card" style="margin-bottom:10px">
+      <%= stars(r.rating) %> <strong><%= r.user.name.split.first %></strong>
+      <span class="muted"> · <%= l(r.created_at.to_date) %></span>
+      <% if r.comment.present? %><p style="margin:.4rem 0 0"><%= r.comment %></p><% end %>
+    </div>
+  <% end %>
+<% else %>
+  <p class="muted">Ainda não há avaliações para este cupcake.</p>
+<% end %>

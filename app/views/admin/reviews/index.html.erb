@@ -1,0 +1,13 @@
+<h1>Moderação de avaliações</h1>
+<% if @reviews.empty? %><p class="muted">Nenhuma avaliação recebida.</p><% end %>
+<% @reviews.each do |r| %>
+  <div class="card" style="margin-bottom:10px">
+    <%= stars(r.rating) %> <strong><%= r.product.name %></strong> · <%= r.user.name %>
+    <span class="badge"><%= r.approved? ? "Publicada" : "Pendente" %></span>
+    <% if r.comment.present? %><p><%= r.comment %></p><% end %>
+    <div class="actions">
+      <%= button_to "Publicar", admin_review_path(r), method: :patch, class: "btn btn-sm" unless r.approved? %>
+      <%= button_to "Remover", admin_review_path(r), method: :delete, class: "btn btn-outline btn-sm", form: { data: { turbo_confirm: "Remover avaliação?" } } %>
+    </div>
+  </div>
+<% end %>

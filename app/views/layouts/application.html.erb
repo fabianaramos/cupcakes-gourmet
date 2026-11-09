@@ -1,0 +1,41 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+  <head>
+    <title><%= content_for(:title) || "Cupcakes Gourmet" %></title>
+    <meta name="viewport" content="width=device-width,initial-scale=1">
+    <meta name="theme-color" content="#7a2e4f">
+    <%= csrf_meta_tags %>
+    <%= csp_meta_tag %>
+    <%= stylesheet_link_tag :app, "data-turbo-track": "reload" %>
+    <%= javascript_importmap_tags %>
+  </head>
+  <body>
+    <header class="topbar">
+      <div class="wrap topbar-inner">
+        <%= link_to root_path, class: "brand" do %>🧁 <span>Cupcakes Gourmet</span><% end %>
+        <nav class="nav" aria-label="Principal">
+          <%= link_to "Vitrine", root_path %>
+          <% if current_user&.cliente? %>
+            <%= link_to "Meus pedidos", orders_path %>
+            <%= button_to "Sair", logout_path, method: :delete, class: "linklike", form: { data: { turbo_confirm: "Deseja sair da sua conta?" } } %>
+          <% else %>
+            <%= link_to "Entrar", login_path %>
+          <% end %>
+          <%= link_to cart_path, class: "cart-link", aria: { label: "Carrinho com #{cart.count} itens" } do %>
+            🛒 <span class="cart-count" id="cart-count"><%= cart.count %></span>
+          <% end %>
+        </nav>
+      </div>
+    </header>
+    <main class="wrap">
+      <% flash.each do |type, msg| %>
+        <div class="flash flash-<%= type %>" role="<%= type == 'alert' ? 'alert' : 'status' %>"><%= msg %></div>
+      <% end %>
+      <%= yield %>
+    </main>
+    <footer class="footer wrap">
+      Cupcakes Gourmet · Projeto Integrador Transdisciplinar em Engenharia de Software II ·
+      <%= link_to "Área administrativa", admin_root_path %>
+    </footer>
+  </body>
+</html>

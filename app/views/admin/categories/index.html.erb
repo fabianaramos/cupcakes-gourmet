@@ -1,0 +1,15 @@
+<h1>Categorias</h1>
+<%= error_summary(@category) %>
+<%= form_with model: [:admin, @category], class: "qty-form", style: "margin-bottom:14px" do |f| %>
+  <%= f.text_field :name, placeholder: "Nova categoria", required: true, "aria-label": "Nome da categoria", style: "width:220px;padding:8px" %>
+  <button class="btn btn-sm" type="submit">Adicionar</button>
+<% end %>
+<div class="table-wrap"><table>
+  <thead><tr><th>Nome</th><th>Cupcakes</th><th></th></tr></thead>
+  <tbody>
+  <% @categories.each do |c| %>
+    <tr><td><%= c.name %></td><td><%= c.products.count %></td>
+      <td><%= button_to "Excluir", admin_category_path(c), method: :delete, class: "btn btn-outline btn-sm", form: { data: { turbo_confirm: "Excluir #{c.name}?" } } %></td></tr>
+  <% end %>
+  </tbody>
+</table></div>

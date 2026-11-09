@@ -1,0 +1,37 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+  <head>
+    <title><%= content_for(:title) || "Painel · Cupcakes Gourmet" %></title>
+    <meta name="viewport" content="width=device-width,initial-scale=1">
+    <%= csrf_meta_tags %>
+    <%= csp_meta_tag %>
+    <%= stylesheet_link_tag :app, "data-turbo-track": "reload" %>
+    <%= javascript_importmap_tags %>
+  </head>
+  <body class="admin">
+    <header class="topbar admin-bar">
+      <div class="wrap topbar-inner">
+        <%= link_to admin_root_path, class: "brand" do %>🧁 <span>Painel administrativo</span><% end %>
+        <% if current_user&.staff? && current_user.approved? %>
+          <nav class="nav" aria-label="Administração">
+            <%= link_to "Pedidos", admin_orders_path %>
+            <%= link_to "Cupcakes", admin_products_path %>
+            <%= link_to "Categorias", admin_categories_path %>
+            <%= link_to "Cupons", admin_coupons_path %>
+            <%= link_to "Avaliações", admin_reviews_path %>
+            <%= link_to "Relatórios", admin_reports_path %>
+            <%= link_to "Administradores", admin_users_path if current_user.superadmin? %>
+            <%= link_to "Ver loja", root_path %>
+            <%= button_to "Sair", admin_logout_path, method: :delete, class: "linklike" %>
+          </nav>
+        <% end %>
+      </div>
+    </header>
+    <main class="wrap">
+      <% flash.each do |type, msg| %>
+        <div class="flash flash-<%= type %>" role="<%= type == 'alert' ? 'alert' : 'status' %>"><%= msg %></div>
+      <% end %>
+      <%= yield %>
+    </main>
+  </body>
+</html>

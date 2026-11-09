@@ -1,0 +1,13 @@
+<article class="card product-card">
+  <%= link_to product_path(product), tabindex: -1 do %><%= product_image(product) %><% end %>
+  <div class="body">
+    <span class="tag"><%= product.category.name %></span>
+    <h3><%= link_to product.name, product_path(product) %></h3>
+    <p class="muted"><%= truncate(product.description, length: 80) %></p>
+    <div class="price"><%= money(product.price) %></div>
+    <%= form_with url: add_cart_path, method: :post do %>
+      <%= hidden_field_tag :product_id, product.id %>
+      <button class="btn btn-block" type="submit">Adicionar ao carrinho</button>
+    <% end %>
+  </div>
+</article>

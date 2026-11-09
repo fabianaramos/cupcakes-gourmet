@@ -1,0 +1,14 @@
+<%= error_summary(coupon) %>
+<%= form_with model: [:admin, coupon], class: "card narrow" do |f| %>
+  <div class="field"><%= f.label :code %><%= f.text_field :code, required: true, style: "text-transform:uppercase" %></div>
+  <div class="row row-2">
+    <div class="field"><%= f.label :kind %><%= f.select :kind, [["Percentual (%)", "percentual"], ["Valor fixo (R$)", "fixo"]] %></div>
+    <div class="field"><%= f.label :value %><%= f.number_field :value, step: "0.01", min: "0.01", required: true %><span class="hint">Percentual máximo: 50%.</span></div>
+  </div>
+  <div class="row row-2">
+    <div class="field"><%= f.label :valid_until %><%= f.date_field :valid_until, required: true %></div>
+    <div class="field"><%= f.label :usage_limit %><%= f.number_field :usage_limit, min: 1, required: true %></div>
+  </div>
+  <label class="option"><%= f.check_box :active %> <span>Ativo</span></label>
+  <div class="actions"><button class="btn" type="submit">Salvar</button><%= link_to "Cancelar", admin_coupons_path %></div>
+<% end %>

@@ -1,0 +1,20 @@
+<h1>Visão geral</h1>
+<div class="stats">
+  <div class="stat"><div class="muted">Pedidos em andamento</div><div class="n"><%= @pending_orders %></div><%= link_to "Ver pedidos", admin_orders_path %></div>
+  <div class="stat"><div class="muted">Vendas hoje</div><div class="n"><%= money(@today_sales) %></div></div>
+  <div class="stat"><div class="muted">Avaliações para moderar</div><div class="n"><%= @pending_reviews %></div><%= link_to "Moderar", admin_reviews_path %></div>
+  <% if current_user.superadmin? %>
+    <div class="stat"><div class="muted">Admins pendentes / bloqueados</div><div class="n"><%= @pending_admins %> / <%= @locked_admins %></div><%= link_to "Gerenciar", admin_users_path %></div>
+  <% end %>
+</div>
+
+<% if @low_stock.any? %>
+  <div class="flash flash-alert" role="alert">
+    <strong>⚠️ Estoque baixo:</strong>
+    <%= safe_join(@low_stock.map { |p| "#{p.name} (#{p.stock} un.)" }, ", ") %>
+    — <%= link_to "ajustar estoque", admin_products_path %>
+  </div>
+<% end %>
+
+<h2>Últimos pedidos</h2>
+<%= render "admin/orders/table", orders: @latest_orders %>

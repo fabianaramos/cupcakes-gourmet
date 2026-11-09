@@ -1,0 +1,90 @@
+<% content_for :title, "Pedido #{@order.number} · Cupcakes Gourmet" %>
+<p><%= link_to "← Meus pedidos", orders_path %></p>
+<h1>Pedido <%= @order.number %> <%= status_badge(@order) %></h1>
+
+<div class="layout-2">
+  <div>
+    <% if @order.payment_method == "pix" %>
+      <div class="card" style="margin-bottom:14px">
+        <h2 style="margin-top:0">PIX</h2>
+        <div style="display:flex;gap:14px;align-items:center;flex-wrap:wrap">
+          <div aria-label="QR Code PIX (simulado)" role="img" style="width:120px;height:120px;background:repeating-conic-gradient(#000 0 25%,#fff 0 50%) 0 0/20px 20px;border:6px solid #fff;outline:1px solid #ccc"></div>
+          <div style="flex:1;min-width:200px"><p class="muted">Código copia-e-cola (simulado):</p><div class="code" id="pix"><%= @order.payment_code %></div>
+            <button class="btn btn-sm btn-outline" type="button" onclick="navigator.clipboard.writeText(document.getElementById('pix').textContent);this.textContent='Copiado!'">Copiar código</button></div>
+        </div>
+      </div>
+    <% elsif @order.payment_method == "boleto" %>
+      <div class="card" style="margin-bottom:14px">
+        <h2 style="margin-top:0">Boleto</h2>
+        <p class="muted">Vencimento: <%= l(PaymentSimulator.boleto_due_date(@order.created_at.to_date)) %> <%= "· pagamento confirmado" if @order.paid? %></p>
+        <div class="code"><%= @order.payment_code %></div>
+      </div>
+    <% end %>
+
+    <div class="card">
+      <h2 style="margin-top:0">Acompanhamento</h2>
+      <% if @order.cancelled? %>
+        <p class="flash flash-alert">Pedido cancelado em <%= l(@order.status_changes.last.created_at) %>. <%= @order.refund_message %></p>
+      <% else %>
+        <% reached = Order::FLOW.index(@order.status) %>
+        <ol class="timeline">
+          <% Order::FLOW.each_with_index do |st, i| %>
+            <% change = @order.status_changes.find { |c| c.to_status == st } %>
+            <li class="<%= 'done' if i <= reached %> <%= 'current' if i == reached %>">
+              <%= Order::STATUS_LABELS[st] %><% if change %> <span class="muted">· <%= l(change.created_at, format: :short) %></span><% end %>
+            </li>
+          <% end %>
+        </ol>
+      <% end %>
+      <% if @order.cancellable_by_client? %>
+        <%= button_to "Cancelar pedido", cancel_order_path(@order), method: :patch, class: "btn btn-danger btn-sm",
+                      form: { data: { turbo_confirm: "Tem certeza que deseja cancelar o pedido #{@order.number}?" } } %>
+      <% end %>
+    </div>
+
+    <h2>Itens</h2>
+    <div class="table-wrap">
+      <table>
+        <thead><tr><th>Cupcake</th><th>Qtd.</th><th class="right">Total</th><% if @order.delivered? %><th>Avaliar</th><% end %></tr></thead>
+        <tbody>
+        <% @items.each do |item| %>
+          <tr>
+            <td><%= item.product.name %></td>
+            <td><%= item.quantity %></td>
+            <td class="right"><%= money(item.total) %></td>
+            <% if @order.delivered? %>
+              <td>
+                <% if @reviewed_ids.include?(item.product_id) %>
+                  <span class="muted">Avaliado ✓</span>
+                <% else %>
+                  <%= form_with url: order_reviews_path(@order), class: "qty-form" do %>
+                    <%= hidden_field_tag "review[product_id]", item.product_id %>
+                    <select name="review[rating]" aria-label="Nota" required>
+                      <% 5.downto(1) do |n| %><option value="<%= n %>"><%= "★" * n %></option><% end %>
+                    </select>
+                    <input type="text" name="review[comment]" placeholder="Comentário (opcional)" style="width:auto">
+                    <button class="btn btn-sm" type="submit">Enviar</button>
+                  <% end %>
+                <% end %>
+              </td>
+            <% end %>
+          </tr>
+        <% end %>
+        </tbody>
+      </table>
+    </div>
+  </div>
+
+  <aside class="card summary">
+    <h2 style="margin-top:0">Resumo</h2>
+    <dl>
+      <dt>Subtotal</dt><dd><%= money(@order.subtotal) %></dd>
+      <% if @order.discount.positive? %><dt>Desconto</dt><dd>– <%= money(@order.discount) %></dd><% end %>
+      <dt>Frete</dt><dd><%= money(@order.shipping) %></dd>
+      <dt class="total">Total</dt><dd class="total"><%= money(@order.total) %></dd>
+    </dl>
+    <p><strong>Pagamento:</strong> <%= @order.payment_label %><%= " em #{@order.installments}x" if @order.installments > 1 %></p>
+    <p><strong>Entrega:</strong> <%= l(@order.delivery_date) %> · <%= @order.period_label %></p>
+    <p class="muted"><%= @order.address %></p>
+  </aside>
+</div>

@@ -1,0 +1,25 @@
+<% if orders.empty? %>
+  <p class="muted">Nenhum pedido encontrado.</p>
+<% else %>
+<div class="table-wrap">
+  <table>
+    <thead><tr><th>Pedido</th><th>Cliente</th><th>Entrega</th><th>Status</th><th class="right">Total</th><th>Ação</th></tr></thead>
+    <tbody>
+    <% orders.each do |o| %>
+      <tr>
+        <td><%= link_to o.number, admin_order_path(o) %><br><span class="muted"><%= l(o.created_at, format: :short) %></span></td>
+        <td><%= o.user.name %></td>
+        <td><%= l(o.delivery_date, format: :short) %> · <%= o.delivery_period %></td>
+        <td><%= status_badge(o) %></td>
+        <td class="right"><%= money(o.total) %></td>
+        <td>
+          <% if (nxt = o.next_status) %>
+            <%= button_to "→ #{Order::STATUS_LABELS[nxt]}", advance_admin_order_path(o), method: :patch, class: "btn btn-sm" %>
+          <% end %>
+        </td>
+      </tr>
+    <% end %>
+    </tbody>
+  </table>
+</div>
+<% end %>

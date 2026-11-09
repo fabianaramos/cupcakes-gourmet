@@ -1,0 +1,16 @@
+<h1>Administradores</h1>
+<div class="table-wrap"><table>
+  <thead><tr><th>Nome</th><th>E-mail</th><th>Papel</th><th>Situação</th><th></th></tr></thead>
+  <tbody>
+  <% @users.each do |u| %>
+    <tr>
+      <td><%= u.name %></td><td><%= u.email %></td><td><%= u.role %></td>
+      <td><%= !u.approved? ? "Aguardando aprovação" : (u.locked? ? "🔒 Bloqueado (tentativas inválidas)" : "Ativo") %></td>
+      <td>
+        <%= button_to "Aprovar", approve_admin_user_path(u), method: :patch, class: "btn btn-sm" unless u.approved? %>
+        <%= button_to "Desbloquear", unlock_admin_user_path(u), method: :patch, class: "btn btn-sm btn-outline" if u.locked? %>
+      </td>
+    </tr>
+  <% end %>
+  </tbody>
+</table></div>

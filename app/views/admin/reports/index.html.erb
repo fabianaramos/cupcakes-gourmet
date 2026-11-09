@@ -1,0 +1,39 @@
+<h1>Relatório de vendas</h1>
+<nav class="chips no-print">
+  <% Admin::ReportsController::PERIODS.each do |key, label| %>
+    <%= link_to label, admin_reports_path(periodo: key), class: "chip #{'on' if @period == key}" %>
+  <% end %>
+  <button class="btn btn-sm btn-outline" type="button" onclick="window.print()">Exportar PDF / Imprimir</button>
+</nav>
+<p class="muted">Período: <%= Admin::ReportsController::PERIODS[@period] %> · pedidos cancelados não entram no cálculo.</p>
+<div class="stats">
+  <div class="stat"><div class="muted">Total de vendas</div><div class="n"><%= money(@revenue) %></div></div>
+  <div class="stat"><div class="muted">Pedidos</div><div class="n"><%= @orders_count %></div></div>
+  <div class="stat"><div class="muted">Ticket médio</div><div class="n"><%= money(@avg_ticket) %></div></div>
+</div>
+<div class="layout-2">
+  <div>
+    <h2>Mais vendidos</h2>
+    <% max = @top_products.map(&:second).max.to_f %>
+    <div class="table-wrap"><table>
+      <thead><tr><th>Cupcake</th><th>Unidades</th><th class="right">Receita</th></tr></thead>
+      <tbody>
+      <% @top_products.each do |name, qty, revenue| %>
+        <tr><td><%= name %>
+          <div style="height:6px;border-radius:3px;background:var(--brand);width:<%= max.zero? ? 0 : (qty / max * 100).round %>%"></div></td>
+          <td><%= qty %></td><td class="right"><%= money(revenue) %></td></tr>
+      <% end %>
+      <% if @top_products.empty? %><tr><td colspan="3" class="muted">Sem vendas no período.</td></tr><% end %>
+      </tbody>
+    </table></div>
+  </div>
+  <div>
+    <h2>Por categoria</h2>
+    <div class="table-wrap"><table>
+      <thead><tr><th>Categoria</th><th>Un.</th><th class="right">Receita</th></tr></thead>
+      <tbody>
+      <% @by_category.each do |name, qty, revenue| %><tr><td><%= name %></td><td><%= qty %></td><td class="right"><%= money(revenue) %></td></tr><% end %>
+      </tbody>
+    </table></div>
+  </div>
+</div>

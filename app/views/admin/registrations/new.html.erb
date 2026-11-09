@@ -1,0 +1,13 @@
+<div class="narrow">
+  <h1>Cadastro de administrador</h1>
+  <p class="muted">O acesso fica pendente até a aprovação do superadministrador.</p>
+  <%= error_summary(@user) %>
+  <%= form_with model: @user, url: admin_signup_path, class: "card" do |f| %>
+    <div class="field"><%= f.label :name %><%= f.text_field :name, required: true %></div>
+    <div class="field"><%= f.label :email, "E-mail corporativo" %><%= f.email_field :email, required: true, placeholder: "nome@#{User::CORPORATE_DOMAIN}" %></div>
+    <div class="field"><%= f.label :password %><%= f.password_field :password, required: true, autocomplete: "new-password" %>
+      <span class="hint">Mínimo 10 caracteres, com letras, números e caractere especial.</span></div>
+    <div class="field"><%= f.label :password_confirmation %><%= f.password_field :password_confirmation, required: true, autocomplete: "new-password" %></div>
+    <button class="btn btn-block" type="submit">Enviar cadastro</button>
+  <% end %>
+</div>

@@ -1,0 +1,107 @@
+pt-BR:
+  activerecord:
+    models:
+      user: Usuário
+      product: Cupcake
+      order: Pedido
+      coupon: Cupom
+      address: Endereço
+      category: Categoria
+      review: Avaliação
+    errors:
+      messages:
+        record_invalid: "A validação falhou: %{errors}"
+    attributes:
+      user:
+        name: Nome
+        email: E-mail
+        password: Senha
+        password_confirmation: Confirmação de senha
+        cpf: CPF
+        phone: Telefone
+      address:
+        cep: CEP
+        street: Rua
+        number: Número
+        complement: Complemento
+        neighborhood: Bairro
+        city: Cidade
+        state: UF
+      product:
+        name: Nome
+        description: Descrição
+        ingredients: Ingredientes
+        allergens: Alérgenos
+        price: Preço
+        stock: Estoque
+        min_stock: Estoque mínimo
+        image_url: URL da imagem
+        category: Categoria
+      coupon:
+        code: Código
+        kind: Tipo
+        value: Valor
+        valid_until: Validade
+        usage_limit: Limite de usos
+      order:
+        delivery_date: Data de entrega
+        delivery_period: Faixa de horário
+        payment_method: Forma de pagamento
+        installments: Parcelamento
+      review:
+        rating: Nota
+        comment: Comentário
+        product_id: Produto
+      category:
+        name: Nome
+  errors:
+    format: "%{attribute} %{message}"
+    messages:
+      blank: não pode ficar em branco
+      taken: já está em uso
+      invalid: não é válido
+      confirmation: não confere com %{attribute}
+      inclusion: não é válido
+      greater_than: deve ser maior que %{count}
+      greater_than_or_equal_to: deve ser maior ou igual a %{count}
+      less_than_or_equal_to: deve ser menor ou igual a %{count}
+      not_a_number: não é um número
+      not_an_integer: deve ser um número inteiro
+      in: deve estar entre %{count}
+      too_long: é muito longo (máximo %{count} caracteres)
+      too_short: é muito curto (mínimo %{count} caracteres)
+      required: é obrigatório
+      restrict_dependent_destroy:
+        has_many: "Não é possível excluir porque existem %{record} vinculados"
+        has_one: "Não é possível excluir porque existe %{record} vinculado"
+  number:
+    currency:
+      format:
+        unit: "R$"
+        format: "%u %n"
+        separator: ","
+        delimiter: "."
+        precision: 2
+    format:
+      separator: ","
+      delimiter: "."
+  date:
+    formats:
+      default: "%d/%m/%Y"
+      short: "%d/%m"
+    day_names: [domingo, segunda-feira, terça-feira, quarta-feira, quinta-feira, sexta-feira, sábado]
+    abbr_day_names: [dom, seg, ter, qua, qui, sex, sáb]
+    month_names: [~, janeiro, fevereiro, março, abril, maio, junho, julho, agosto, setembro, outubro, novembro, dezembro]
+    abbr_month_names: [~, jan, fev, mar, abr, mai, jun, jul, ago, set, out, nov, dez]
+    order: [day, month, year]
+  time:
+    formats:
+      default: "%d/%m/%Y %H:%M"
+      short: "%d/%m %H:%M"
+    am: am
+    pm: pm
+  helpers:
+    submit:
+      create: Salvar
+      update: Salvar
+      submit: Enviar

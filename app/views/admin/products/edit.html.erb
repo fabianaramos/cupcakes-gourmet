@@ -1,0 +1,4 @@
+<h1>Editar <%= @product.name %></h1>
+<%= render "form", product: @product %>
+<%= button_to "Excluir cupcake", admin_product_path(@product), method: :delete, class: "btn btn-danger btn-sm",
+              form: { data: { turbo_confirm: "Excluir #{@product.name}?" }, style: "margin-top:14px" } %>

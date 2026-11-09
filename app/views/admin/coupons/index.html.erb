@@ -1,0 +1,23 @@
+<h1>Cupons de desconto</h1>
+<div class="actions" style="margin-bottom:14px">
+  <%= link_to "+ Novo cupom", new_admin_coupon_path, class: "btn" %>
+  <%= form_with url: admin_coupons_path, method: :get, class: "qty-form" do %>
+    <input type="search" name="q" value="<%= params[:q] %>" placeholder="Código" aria-label="Buscar código" style="width:140px">
+    <%= select_tag :ativo, options_for_select([["Todos", ""], ["Ativos", "1"], ["Inativos", "0"]], params[:ativo]), "aria-label": "Filtrar situação" %>
+    <button class="btn btn-sm btn-outline" type="submit">Filtrar</button>
+  <% end %>
+</div>
+<div class="table-wrap"><table>
+  <thead><tr><th>Código</th><th>Desconto</th><th>Validade</th><th>Usos</th><th>Situação</th><th></th></tr></thead>
+  <tbody>
+  <% @coupons.each do |c| %>
+    <tr>
+      <td><strong><%= c.code %></strong></td><td><%= c.label %></td><td><%= l(c.valid_until) %></td>
+      <td><%= c.used_count %> / <%= c.usage_limit %></td>
+      <td><%= c.usable? ? "Ativo" : (c.unusable_reason || "Inativo") %></td>
+      <td><%= link_to "Editar", edit_admin_coupon_path(c) %>
+        <% if c.active? %> · <%= button_to "Desativar", admin_coupon_path(c), method: :delete, class: "linklike", form: { style: "display:inline" } %><% end %></td>
+    </tr>
+  <% end %>
+  </tbody>
+</table></div>

@@ -1,0 +1,33 @@
+<% content_for :title, "Criar conta · Cupcakes Gourmet" %>
+<div class="narrow">
+  <h1>Criar conta</h1>
+  <p class="muted">Leva menos de um minuto. Já tem conta? <%= link_to "Entrar", login_path %></p>
+  <%= error_summary(@user) %>
+  <%= error_summary(@address) if @user.errors.empty? %>
+  <%= form_with model: @user, url: signup_path do |f| %>
+    <fieldset>
+      <legend>1. Seus dados</legend>
+      <div class="field"><%= f.label :name %><%= f.text_field :name, required: true, autocomplete: "name" %></div>
+      <div class="row row-2">
+        <div class="field"><%= f.label :email %><%= f.email_field :email, required: true, autocomplete: "email" %></div>
+        <div class="field"><%= f.label :phone %><%= f.telephone_field :phone, placeholder: "(11) 99999-9999", autocomplete: "tel" %></div>
+      </div>
+      <div class="field"><%= f.label :cpf %><%= f.text_field :cpf, required: true, inputmode: "numeric", placeholder: "000.000.000-00" %></div>
+    </fieldset>
+    <fieldset>
+      <legend>2. Endereço de entrega</legend>
+      <%= fields_for :address, @address do |a| %>
+        <%= render "addresses/fields", a: a %>
+      <% end %>
+    </fieldset>
+    <fieldset>
+      <legend>3. Senha</legend>
+      <div class="row row-2">
+        <div class="field"><%= f.label :password %><%= f.password_field :password, required: true, autocomplete: "new-password" %>
+          <span class="hint">Mínimo 8 caracteres, com letras e números.</span></div>
+        <div class="field"><%= f.label :password_confirmation %><%= f.password_field :password_confirmation, required: true, autocomplete: "new-password" %></div>
+      </div>
+    </fieldset>
+    <button class="btn btn-block" type="submit">Criar conta</button>
+  <% end %>
+</div>

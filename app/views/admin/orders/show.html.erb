@@ -1,0 +1,45 @@
+<p><%= link_to "← Pedidos", admin_orders_path %></p>
+<h1>Pedido <%= @order.number %> <%= status_badge(@order) %></h1>
+<div class="layout-2">
+  <div>
+    <div class="table-wrap">
+      <table>
+        <thead><tr><th>Cupcake</th><th>Qtd.</th><th class="right">Unitário</th><th class="right">Total</th></tr></thead>
+        <tbody>
+        <% @items.each do |i| %>
+          <tr><td><%= i.product.name %></td><td><%= i.quantity %></td><td class="right"><%= money(i.unit_price) %></td><td class="right"><%= money(i.total) %></td></tr>
+        <% end %>
+        </tbody>
+      </table>
+    </div>
+    <h2>Histórico de status</h2>
+    <ul>
+      <% @order.status_changes.each do |c| %>
+        <li><%= l(c.created_at) %> — <%= Order::STATUS_LABELS[c.from_status] || "novo" %> → <strong><%= Order::STATUS_LABELS[c.to_status] %></strong>
+          <span class="muted">(<%= c.user&.name || "sistema/pagamento" %>)</span></li>
+      <% end %>
+    </ul>
+    <div class="actions">
+      <% if (nxt = @order.next_status) %>
+        <%= button_to "Avançar para: #{Order::STATUS_LABELS[nxt]}", advance_admin_order_path(@order), method: :patch, class: "btn" %>
+      <% end %>
+      <% unless @order.cancelled? || @order.delivered? %>
+        <%= button_to "Cancelar pedido", cancel_admin_order_path(@order), method: :patch, class: "btn btn-danger",
+                      form: { data: { turbo_confirm: "Cancelar o pedido e devolver o estoque?" } } %>
+      <% end %>
+    </div>
+  </div>
+  <aside class="card summary">
+    <h2 style="margin-top:0">Cliente</h2>
+    <p><strong><%= @order.user.name %></strong><br><%= @order.user.email %><br><%= @order.user.phone %></p>
+    <p class="muted"><%= @order.address %></p>
+    <p><strong>Entrega:</strong> <%= l(@order.delivery_date) %> · <%= @order.period_label %></p>
+    <dl>
+      <dt>Subtotal</dt><dd><%= money(@order.subtotal) %></dd>
+      <dt>Desconto</dt><dd>– <%= money(@order.discount) %></dd>
+      <dt>Frete</dt><dd><%= money(@order.shipping) %></dd>
+      <dt class="total">Total</dt><dd class="total"><%= money(@order.total) %></dd>
+    </dl>
+    <p><strong>Pagamento:</strong> <%= @order.payment_label %> <%= @order.paid? ? "· pago" : "· aguardando" %></p>
+  </aside>
+</div>

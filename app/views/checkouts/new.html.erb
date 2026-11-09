@@ -1,0 +1,93 @@
+<% content_for :title, "Finalizar pedido · Cupcakes Gourmet" %>
+<h1>Finalizar pedido</h1>
+<%= form_with model: @order, url: checkout_path, method: :post, id: "checkout-form" do |f| %>
+  <div class="layout-2">
+    <div>
+      <fieldset>
+        <legend>1. Endereço de entrega</legend>
+        <% if @addresses.empty? %>
+          <p>Nenhum endereço cadastrado.</p>
+        <% end %>
+        <% @addresses.each do |addr| %>
+          <label class="option">
+            <%= f.radio_button :address_id, addr.id, checked: addr.id == @selected_address_id, data: { shipping: @shipping_by_address[addr.id].to_s } %>
+            <span><%= addr %><br><span class="muted">Frete: <%= money(@shipping_by_address[addr.id]) %></span></span>
+          </label>
+        <% end %>
+        <%= link_to "+ Cadastrar outro endereço", new_address_path %>
+      </fieldset>
+
+      <fieldset>
+        <legend>2. Data e horário da entrega</legend>
+        <div class="row row-2">
+          <div class="field">
+            <%= f.label :delivery_date %>
+            <%= f.date_field :delivery_date, min: Date.tomorrow, max: 30.days.from_now.to_date, required: true %>
+            <span class="hint">A partir de amanhã. Não entregamos aos domingos e feriados.</span>
+          </div>
+          <div class="field">
+            <%= f.label :delivery_period %>
+            <%= f.select :delivery_period, Order::PERIODS.invert, {}, required: true %>
+          </div>
+        </div>
+      </fieldset>
+
+      <fieldset>
+        <legend>3. Pagamento</legend>
+        <% Order::PAYMENT_METHODS.each do |key, label| %>
+          <label class="option">
+            <%= f.radio_button :payment_method, key %>
+            <span><strong><%= label %></strong><br>
+              <span class="muted"><%= { "pix" => "QR Code e código copia-e-cola; aprovação imediata.",
+                                        "cartao" => "Até 3x sem juros em compras acima de R$ 60,00.",
+                                        "boleto" => "Vencimento em 2 dias úteis." }[key] %></span></span>
+          </label>
+        <% end %>
+        <div class="field" id="installments-field">
+          <%= f.label :installments %>
+          <%= f.select :installments, (1..Order::MAX_INSTALLMENTS).map { |n| ["#{n}x sem juros", n] } %>
+          <span class="hint">Simulação acadêmica: nenhum dado de cartão é solicitado ou armazenado.</span>
+        </div>
+      </fieldset>
+    </div>
+
+    <aside class="card summary">
+      <h2 style="margin-top:0">4. Resumo</h2>
+      <ul style="padding-left:18px">
+        <% @lines.each do |l| %><li><%= l.quantity %>× <%= l.product.name %> — <%= money(l.total) %></li><% end %>
+      </ul>
+      <dl>
+        <dt>Subtotal</dt><dd><%= money(@subtotal) %></dd>
+        <% if @discount.positive? %><dt>Cupom <%= @coupon.code %></dt><dd>– <%= money(@discount) %></dd><% end %>
+        <dt>Frete</dt><dd id="shipping"><%= money(@shipping_by_address[@selected_address_id] || 0) %></dd>
+        <dt class="total">Total</dt>
+        <dd class="total" id="total" data-base="<%= (@subtotal - @discount).to_s %>"><%= money(@subtotal - @discount + (@shipping_by_address[@selected_address_id] || 0)) %></dd>
+      </dl>
+      <button class="btn btn-block" type="submit" style="margin-top:14px" <%= "disabled" if @addresses.empty? %>>Confirmar pedido</button>
+      <p><%= link_to "Voltar ao carrinho", cart_path %></p>
+    </aside>
+  </div>
+<% end %>
+<script>
+  (() => {
+    const form = document.getElementById("checkout-form");
+    if (!form) return;
+    const fmt = v => v.toLocaleString("pt-BR", { style: "currency", currency: "BRL" });
+    const update = () => {
+      const addr = form.querySelector("input[name='order[address_id]']:checked");
+      const ship = addr ? parseFloat(addr.dataset.shipping) : 0;
+      const totalEl = document.getElementById("total");
+      const total = parseFloat(totalEl.dataset.base) + ship;
+      document.getElementById("shipping").textContent = fmt(ship);
+      totalEl.textContent = fmt(total);
+      const card = form.querySelector("input[value='cartao']:checked");
+      const instField = document.getElementById("installments-field");
+      instField.hidden = !card;
+      const sel = instField.querySelector("select");
+      [...sel.options].forEach(o => o.disabled = o.value !== "1" && total <= 60);
+      if (!card || total <= 60) sel.value = "1";
+    };
+    form.addEventListener("change", update);
+    update();
+  })();
+</script>

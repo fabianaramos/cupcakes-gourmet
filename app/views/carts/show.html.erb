@@ -1,0 +1,50 @@
+<% content_for :title, "Carrinho · Cupcakes Gourmet" %>
+<h1>Seu carrinho</h1>
+<% if @lines.empty? %>
+  <div class="card empty">
+    <p><strong>Seu carrinho está vazio.</strong></p>
+    <%= link_to "Voltar à vitrine", root_path, class: "btn" %>
+  </div>
+<% else %>
+  <div class="layout-2">
+    <div class="table-wrap">
+      <table>
+        <thead><tr><th>Cupcake</th><th>Qtd.</th><th class="right">Total</th><th><span class="visually-hidden">Ações</span></th></tr></thead>
+        <tbody>
+        <% @lines.each do |line| %>
+          <tr>
+            <td><%= link_to line.product.name, product_path(line.product) %><br><span class="muted"><%= money(line.product.price) %> cada</span></td>
+            <td>
+              <%= form_with url: update_cart_path(line.product.id), method: :patch, class: "qty-form" do %>
+                <input type="number" name="quantity" value="<%= line.quantity %>" min="1" max="<%= [50, line.product.stock].min %>" aria-label="Quantidade de <%= line.product.name %>" onchange="this.form.requestSubmit()">
+              <% end %>
+            </td>
+            <td class="right"><%= money(line.total) %></td>
+            <td><%= button_to "Remover", remove_cart_path(line.product.id), method: :delete, class: "btn btn-outline btn-sm",
+                              form: { data: { turbo_confirm: "Remover #{line.product.name} do carrinho?" } } %></td>
+          </tr>
+        <% end %>
+        </tbody>
+      </table>
+    </div>
+    <aside class="card summary">
+      <h2 style="margin-top:0">Resumo</h2>
+      <%= form_with url: coupon_cart_path, class: "qty-form", style: "margin-bottom:12px" do %>
+        <input type="text" name="code" value="<%= @coupon&.code %>" placeholder="Cupom de desconto" aria-label="Cupom de desconto" style="flex:1;width:auto">
+        <button class="btn btn-outline btn-sm" type="submit">Aplicar</button>
+      <% end %>
+      <dl>
+        <dt>Subtotal</dt><dd><%= money(@subtotal) %></dd>
+        <% if @discount.positive? %><dt>Desconto (<%= @coupon.code %>)</dt><dd>– <%= money(@discount) %></dd><% end %>
+        <dt>Frete</dt><dd class="muted">calculado no checkout</dd>
+        <dt class="total">Total parcial</dt><dd class="total"><%= money(@subtotal - @discount) %></dd>
+      </dl>
+      <% if @subtotal < Order::MIN_SUBTOTAL %>
+        <p class="flash flash-alert">Pedido mínimo de <%= money(Order::MIN_SUBTOTAL) %>. Faltam <%= money(Order::MIN_SUBTOTAL - @subtotal) %>.</p>
+      <% else %>
+        <%= link_to "Finalizar pedido", checkout_path, class: "btn btn-block", style: "margin-top:14px" %>
+      <% end %>
+      <p><%= link_to "Continuar comprando", root_path %></p>
+    </aside>
+  </div>
+<% end %>
