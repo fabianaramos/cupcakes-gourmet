@@ -7,11 +7,11 @@ Revisão da especificação ágil entregue no PIT I (22 histórias, 107 pontos) 
 | Tema | PIT I (planejado) | PIT II (revisado) | Motivo |
 |---|---|---|---|
 | Plataforma | App mobile nativo | **Aplicação web responsiva** (mobile-first), utilizável no navegador do celular | O material permite web ou mobile; uma única base de código para cliente e admin, publicável e testável por colegas via link |
-| Linguagem / arquitetura | não definida | **Ruby on Rails 8 (MVC)** | Rails implementa o padrão MVC recomendado no material (Model–View–Controller + Router) |
+| Linguagem / arquitetura | não definida | **Ruby on Rails 8 (MVC)** | Rails implementa o padrão MVC recomendado no material (Model-View-Controller + Router) |
 | Banco de dados | não definido | **SQLite** (desenvolvimento/testes) e **PostgreSQL** (produção) | SGBDs populares e de fácil manutenção; mesmas migrations para ambos |
 | Pagamento (US-011) | Gateway real (cartão, PIX, boleto) | **Gateway simulado**: PIX e cartão aprovam na hora; boleto aguarda confirmação do admin | Integração real exige conta empresarial e chaves de produção; regras de negócio (parcelamento, vencimento, não armazenar cartão) foram mantidas |
 | Login social (US-001/002) | Google / Facebook | **Fora do escopo** | Depende de credenciais OAuth de terceiros |
-| E-mails (confirmação, recuperação de senha, aprovação de admin) | Envio automático | **Fora do escopo** — mensagens exibidas na tela | Exige provedor SMTP; registrado como evolução |
+| E-mails (confirmação, recuperação de senha, aprovação de admin) | Envio automático | **Fora do escopo**: mensagens exibidas na tela | Exige provedor SMTP; registrado como evolução |
 | Notificações push (US-012) | Push no celular | **Linha do tempo do pedido** com data/hora de cada status | Push exige app nativo/serviço externo |
 | Autenticação admin (US-022 RNF) | Token JWT | **Sessão em cookie criptografado** do Rails, com expiração por inatividade | Em aplicação web server-side a sessão é o mecanismo padrão e seguro; JWT é indicado para APIs consumidas por apps nativos |
 | Entrega expressa (US-019 CA#3) | Mesmo dia com taxa | **Fora do escopo**; mantidas datas a partir de amanhã, sem domingos/feriados | Prioridade C |
@@ -28,7 +28,7 @@ Revisão da especificação ágil entregue no PIT I (22 histórias, 107 pontos) 
 | US-004 Vitrine | ✅ filtros por categoria e ordenação | `ProductsController#index` |
 | US-005 Detalhes | ✅ alérgenos destacados, avaliações | `ProductsController#show` |
 | US-006 Busca | ✅ parcial, ingredientes, sinônimos, sugestões | `Product.search` |
-| US-007 Adicionar ao carrinho | ✅ 1–50 un., limitado ao estoque | `Cart`, `CartsController` |
+| US-007 Adicionar ao carrinho | ✅ 1 a 50 un., limitado ao estoque | `Cart`, `CartsController` |
 | US-008 Remover do carrinho | ✅ com confirmação | `CartsController#remove` |
 | US-009 Cupom | ✅ 1 por pedido, máx. 50% | `Coupon`, `CartsController#apply_coupon` |
 | US-010 Checkout | ✅ mínimo R$ 25, frete por CEP, protocolo | `Checkout`, `Shipping` |

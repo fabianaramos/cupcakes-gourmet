@@ -1,4 +1,4 @@
-# 🧁 Cupcakes Gourmet — Loja virtual
+# 🧁 Cupcakes Gourmet: loja virtual
 
 Projeto Integrador Transdisciplinar em Engenharia de Software II (Cruzeiro do Sul Virtual).
 Implementação da especificação ágil do PIT I (22 histórias de usuário) como aplicação **web responsiva** em **Ruby on Rails (MVC)**.
@@ -8,13 +8,13 @@ Implementação da especificação ágil do PIT I (22 histórias de usuário) co
 | Linguagem do back-end | Ruby 3.3 · Ruby on Rails 8.1 (padrão MVC) |
 | Front-end | HTML (ERB), CSS próprio mobile-first, JavaScript (Turbo/Stimulus) |
 | Banco de dados | SQLite (desenvolvimento e testes) · PostgreSQL (produção) |
-| Testes | Minitest — unitários e de integração (44 testes) |
+| Testes | Minitest, unitários e de integração (44 testes) |
 | Modo de codificação | Tradicional |
 | Plataforma | Web (responsiva para celular) |
 
 ## Funcionalidades
 
-**Cliente:** cadastro com validação de CPF, login/logout com bloqueio por tentativas e expiração de sessão, vitrine com categorias/ordenação/busca com sinônimos, detalhes com alérgenos e avaliações, carrinho (1–50 un.), cupom de desconto, checkout com frete por CEP, data/faixa de entrega, pagamento simulado (PIX, cartão até 3×, boleto), acompanhamento com linha do tempo, cancelamento e avaliação após a entrega.
+**Cliente:** cadastro com validação de CPF, login/logout com bloqueio por tentativas e expiração de sessão, vitrine com categorias/ordenação/busca com sinônimos, detalhes com alérgenos e avaliações, carrinho (1 a 50 un.), cupom de desconto, checkout com frete por CEP, data/faixa de entrega, pagamento simulado (PIX, cartão até 3×, boleto), acompanhamento com linha do tempo, cancelamento e avaliação após a entrega.
 
 **Administrador:** cadastro pendente de aprovação, login com bloqueio após 3 tentativas, painel com alertas de estoque baixo, CRUD de cupcakes e categorias, ajuste de estoque, gestão de pedidos (fluxo sem pular etapas + histórico), cupons, moderação de avaliações, relatório de vendas (dia/semana/mês, ticket médio, mais vendidos, por categoria; imprimir/PDF). Superadministrador aprova e desbloqueia administradores.
 
@@ -29,7 +29,7 @@ bin/rails db:setup      # cria o banco, roda as migrations e o seed
 bin/rails server        # http://localhost:3000
 ```
 
-Contas de demonstração criadas pelo seed (`db/seeds.rb`) — **apenas para teste**:
+Contas de demonstração criadas pelo seed (`db/seeds.rb`), **apenas para teste**:
 
 | Papel | E-mail | Senha |
 |---|---|---|

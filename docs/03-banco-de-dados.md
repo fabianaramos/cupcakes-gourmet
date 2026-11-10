@@ -26,9 +26,9 @@ erDiagram
 - **products**(<u>id</u>, #category_id, name*, description, ingredients, allergens, price, stock, min_stock, active, image_url, sold_count)
 - **coupons**(<u>id</u>, code*, kind, value, valid_until, usage_limit, used_count, active)
 - **orders**(<u>id</u>, #user_id, #address_id, #coupon_id, number*, status, subtotal, discount, shipping, total, payment_method, installments, payment_code, paid_at, delivery_date, delivery_period)
-- **order_items**(<u>id</u>, #order_id, #product_id, quantity, unit_price) — único (order_id, product_id)
+- **order_items**(<u>id</u>, #order_id, #product_id, quantity, unit_price); único (order_id, product_id)
 - **order_status_changes**(<u>id</u>, #order_id, #user_id, from_status, to_status, created_at)
-- **reviews**(<u>id</u>, #user_id, #product_id, #order_id, rating, comment, approved) — único (order_id, product_id)
+- **reviews**(<u>id</u>, #user_id, #product_id, #order_id, rating, comment, approved); único (order_id, product_id)
 
 (<u>sublinhado</u> = PK, # = FK, * = UNIQUE)
 

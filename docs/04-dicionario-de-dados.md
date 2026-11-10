@@ -111,7 +111,7 @@ Pedidos realizados pelos clientes.
 | `shipping` | decimal(10,2) | não |  |  | Frete calculado pelo CEP |
 | `total` | decimal(10,2) | não |  |  | subtotal − desconto + frete |
 | `payment_method` | string(10) | não |  |  | pix / cartao / boleto |
-| `installments` | integer | não | `1` |  | Parcelas (1–3, só cartão > R$ 60) |
+| `installments` | integer | não | `1` |  | Parcelas (1 a 3, só cartão > R$ 60) |
 | `payment_code` | string(120) | sim |  |  | Código PIX / autorização / linha do boleto (simulados) |
 | `paid_at` | datetime | sim |  |  | Data/hora da confirmação do pagamento |
 | `delivery_date` | date | não |  |  | Data de entrega escolhida |
@@ -130,7 +130,7 @@ Itens de cada pedido (resolve o N:N entre pedidos e produtos).
 | `id` | integer | não |  | PK | Identificador (auto-incremento) |
 | `order_id` | integer | não |  | FK | FK → orders |
 | `product_id` | integer | não |  | FK | FK → products |
-| `quantity` | integer | não |  |  | Quantidade (1–50) |
+| `quantity` | integer | não |  |  | Quantidade (1 a 50) |
 | `unit_price` | decimal(8,2) | não |  |  | Preço no momento da compra (histórico) |
 | `created_at` | datetime | não |  |  | Data/hora de criação |
 | `updated_at` | datetime | não |  |  | Data/hora de atualização |

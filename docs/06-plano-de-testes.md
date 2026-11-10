@@ -1,11 +1,11 @@
-# 6. Testes — verificação e validação
+# 6. Testes: verificação e validação
 
 Seguindo o **Modelo V** do material:
 
 | Nível | O que verifica | Como |
 |---|---|---|
-| Teste unitário | Regras de negócio de cada model/serviço | Minitest — `test/models/*` |
-| Teste de integração | Fluxos HTTP completos (controller + view + banco) | Minitest — `test/integration/*` |
+| Teste unitário | Regras de negócio de cada model/serviço | Minitest, `test/models/*` |
+| Teste de integração | Fluxos HTTP completos (controller + view + banco) | Minitest, `test/integration/*` |
 | Teste de sistema | Aplicação rodando no navegador | Roteiro manual abaixo |
 | Teste de aceitação | 5 colegas usando a versão publicada | Formulário em [`07-formulario-teste-usuarios.md`](07-formulario-teste-usuarios.md) |
 
@@ -24,7 +24,7 @@ Cada teste tem no nome a história/regra que cobre (ex.: `US-018 RN#1: cliente n
 | `test/models/user_test.rb` | US-001 (e-mail único, senha, CPF), US-002 (bloqueio 5×), US-021 (e-mail corporativo, senha forte), US-022 (bloqueio 3×) |
 | `test/models/product_test.rb` | US-014 (nome único, preço), US-015 (estoque, alerta), US-004 (vitrine), US-006 (busca/sinônimos) |
 | `test/models/coupon_test.rb` | US-009, US-020 |
-| `test/models/cart_test.rb` | US-007 (1–50, estoque), US-008 (recalcular total) |
+| `test/models/cart_test.rb` | US-007 (1 a 50, estoque), US-008 (recalcular total) |
 | `test/models/order_test.rb` | US-010 (mínimo, totais), US-011 (PIX/boleto, parcelamento), US-016 (fluxo), US-018 (cancelamento), US-019 (datas), estoque insuficiente |
 | `test/models/review_test.rb` | US-013 |
 | `test/integration/shopping_flow_test.rb` | Vitrine, cadastro, login/bloqueio, sessão expirada, fluxo completo de compra e cancelamento, acesso indevido a pedido alheio |
