@@ -21,7 +21,8 @@
 ## Princípios aplicados (material teórico)
 
 - **Clara / simples:** um objetivo por tela; cadastro em 3 blocos (RNF US-001: até 3 etapas); checkout em 4 blocos (RNF US-010).
-- **Consistente:** mesmos botões, cores e mensagens em loja e painel; cor da marca só para ações principais.
+- **Consistente:** mesmos componentes e mensagens em loja e painel; a cor de destaque fica reservada para as ações principais.
+- **Identidade visual da loja:** estética de confeitaria, com fundo creme (#fff8f1), rosa claro (#fde3ea) em detalhes, vinho (#7a0f2a) nos títulos, no banner e no rodapé (o topo e o fim da página usam a mesma cor para formar uma moldura) e cereja (#c8174a) nos botões. Títulos em DM Serif Display, textos em DM Sans e a marca no rodapé em Bagel Fat One. Elementos decorativos: cobertura escorrendo abaixo do banner, faixa quadriculada antes do rodapé e selos redondos nos produtos. Todas as combinações de texto e fundo têm contraste de pelo menos 4,5:1 (WCAG AA); os ícones são desenhos em SVG, sem emojis. O painel administrativo mantém um visual neutro, focado em produtividade.
 - **Controlada pelo usuário e reversível:** confirmação antes de remover item, sair, cancelar pedido ou excluir; quantidade editável no carrinho.
 - **Feedback imediato:** mensagens verdes (sucesso) e vermelhas (erro) no topo; campos com erro destacados; contador do carrinho; total do checkout recalcula ao trocar endereço/parcelamento.
 - **Padrões (defaults):** próxima data de entrega válida e PIX pré-selecionados; primeiro endereço marcado.

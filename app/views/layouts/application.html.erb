@@ -3,16 +3,20 @@
   <head>
     <title><%= content_for(:title) || "Cupcakes Gourmet" %></title>
     <meta name="viewport" content="width=device-width,initial-scale=1">
-    <meta name="theme-color" content="#7a2e4f">
+    <meta name="theme-color" content="#7a0f2a">
     <%= csrf_meta_tags %>
     <%= csp_meta_tag %>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Bagel+Fat+One&family=DM+Sans:wght@400;500;700&family=DM+Serif+Display&display=swap" rel="stylesheet">
     <%= stylesheet_link_tag :app, "data-turbo-track": "reload" %>
     <%= javascript_importmap_tags %>
   </head>
-  <body>
+  <body class="store">
+    <div class="promo-bar">Frete a partir de R$ 8,00 · Use o cupom <strong>BEMVINDO10</strong> na sua primeira compra</div>
     <header class="topbar">
       <div class="wrap topbar-inner">
-        <%= link_to root_path, class: "brand" do %>🧁 <span>Cupcakes Gourmet</span><% end %>
+        <%= link_to "Cupcakes Gourmet", root_path, class: "brand" %>
         <nav class="nav" aria-label="Principal">
           <%= link_to "Vitrine", root_path %>
           <% if current_user&.cliente? %>
@@ -22,20 +26,45 @@
             <%= link_to "Entrar", login_path %>
           <% end %>
           <%= link_to cart_path, class: "cart-link", aria: { label: "Carrinho com #{cart.count} itens" } do %>
-            🛒 <span class="cart-count" id="cart-count"><%= cart.count %></span>
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M6 7h12l-1 13H7L6 7Z"/><path d="M9 7a3 3 0 0 1 6 0"/></svg>
+            <span class="cart-count" id="cart-count"><%= cart.count %></span>
           <% end %>
         </nav>
       </div>
     </header>
+    <%= yield :hero %>
+    <%= yield :band %>
     <main class="wrap">
       <% flash.each do |type, msg| %>
         <div class="flash flash-<%= type %>" role="<%= type == 'alert' ? 'alert' : 'status' %>"><%= msg %></div>
       <% end %>
       <%= yield %>
     </main>
-    <footer class="footer wrap">
-      Cupcakes Gourmet · Projeto Integrador Transdisciplinar em Engenharia de Software II ·
-      <%= link_to "Área administrativa", admin_root_path %>
+    <div class="checker" aria-hidden="true"></div>
+    <footer class="footer">
+      <div class="footer-cols">
+        <div>
+          <h3>Cupcakes Gourmet</h3>
+          <p>Cupcakes artesanais feitos no dia, com opções veganas e sem glúten, entregues na data que você escolher.</p>
+        </div>
+        <div>
+          <h3>Explore</h3>
+          <ul>
+            <li><%= link_to "Vitrine", root_path %></li>
+            <li><%= link_to "Carrinho", cart_path %></li>
+            <li><%= link_to "Meus pedidos", orders_path %></li>
+          </ul>
+        </div>
+        <div>
+          <h3>Projeto</h3>
+          <ul>
+            <li>Projeto Integrador Transdisciplinar em Engenharia de Software II</li>
+            <li><%= link_to "Área administrativa", admin_root_path %></li>
+          </ul>
+        </div>
+      </div>
+      <div class="wordmark" aria-hidden="true">cupcakes</div>
     </footer>
+    <div class="footer-base">© <%= Date.current.year %> Cupcakes Gourmet · Projeto acadêmico</div>
   </body>
 </html>

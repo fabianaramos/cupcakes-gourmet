@@ -34,4 +34,13 @@ class ProductTest < ActiveSupport::TestCase
     assert_includes Product.search("cacau"), choc
     assert_empty Product.search("abacaxi")
   end
+  test "US-014 foto aceita imagem do catálogo ou link, e recusa outros valores" do
+    product = create_product
+    product.image_url = "cupcakes/red-velvet.jpg"
+    assert product.valid?
+    product.image_url = "https://exemplo.com/foto.jpg"
+    assert product.valid?
+    product.image_url = "cupcakes/nao-existe.jpg"
+    assert_not product.valid?
+  end
 end

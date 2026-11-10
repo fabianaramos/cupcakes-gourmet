@@ -1,6 +1,32 @@
 <% content_for :title, "Vitrine · Cupcakes Gourmet" %>
-<h1>Nossa vitrine</h1>
+<% content_for :hero do %>
+  <% hero_bg = Dir[Rails.root.join("app/assets/images/hero.{jpg,jpeg,png,webp}")].first %>
+  <section class="hero<%= " has-photo" if hero_bg %>"<% if hero_bg %> style="--hero-bg: url('<%= image_path(File.basename(hero_bg)) %>')"<% end %>>
+    <div class="wrap hero-inner">
+      <div>
+        <span class="eyebrow">Confeitaria artesanal</span>
+        <h1>Cupcakes que deixam o dia mais doce</h1>
+        <p>Feitos todos os dias, com opções veganas e sem glúten. Escolha seus sabores e receba em casa na data que preferir.</p>
+        <a class="btn" href="#vitrine">Ver cardápio</a>
+      </div>
+      <% if !hero_bg && (featured = @products.find { |p| p.image_url&.include?("baunilha") } || @products.find { |p| p.image_url.present? }) %>
+        <div class="hero-photo" aria-hidden="true">
+          <%= product_image(featured, "") %>
+          <span class="sticker">Feito<br>hoje</span>
+        </div>
+      <% end %>
+    </div>
+  </section>
+<% end if @query.blank? && params[:categoria].blank? %>
+<% content_for :band do %>
+<div class="wrap section-title" id="vitrine">
+  <span class="eyebrow">Nosso cardápio</span>
+  <h2>Escolha seus favoritos</h2>
+</div>
 
+<section class="search-band" aria-label="Busca e categorias">
+<div class="checker checker-flush" aria-hidden="true"></div>
+<div class="search-band-inner">
 <%= form_with url: products_path, method: :get, class: "filters", role: "search" do %>
   <div class="field">
     <label for="q">Buscar por nome, sabor ou ingrediente</label>
@@ -23,6 +49,9 @@
     <%= link_to c.name, products_path(categoria: c.id, q: @query.presence, ordem: params[:ordem]), class: "chip #{'on' if params[:categoria].to_s == c.id.to_s}" %>
   <% end %>
 </nav>
+</div>
+</section>
+<% end %>
 
 <% if @products.any? %>
   <div class="grid">

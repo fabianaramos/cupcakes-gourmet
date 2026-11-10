@@ -13,5 +13,6 @@ class ProductsController < ApplicationController
     @product = Product.available.find_by(id: params[:id])
     return redirect_to(root_path, alert: "Cupcake indisponível no momento.") unless @product
     @reviews = @product.reviews.approved.includes(:user).order(created_at: :desc)
+    @related = Product.available.includes(:category).where.not(id: @product.id).sorted("populares").limit(3)
   end
 end

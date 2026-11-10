@@ -11,7 +11,7 @@
   <body class="admin">
     <header class="topbar admin-bar">
       <div class="wrap topbar-inner">
-        <%= link_to admin_root_path, class: "brand" do %>🧁 <span>Painel administrativo</span><% end %>
+        <%= link_to "Painel administrativo", admin_root_path, class: "brand" %>
         <% if current_user&.staff? && current_user.approved? %>
           <nav class="nav" aria-label="Administração">
             <%= link_to "Pedidos", admin_orders_path %>

@@ -68,7 +68,7 @@ Cupcakes vendidos na loja.
 | `stock` | integer | não | `0` |  | Quantidade em estoque (>= 0) |
 | `min_stock` | integer | não | `10` |  | Estoque mínimo para alerta (padrão 10) |
 | `active` | boolean | não | `false` |  | Publicado na vitrine (novo produto nasce inativo) |
-| `image_url` | string(500) | sim |  |  | URL da foto |
+| `image_url` | string(500) | sim |  |  | Foto do catálogo (`cupcakes/<nome>.jpg`) ou link externo |
 | `sold_count` | integer | não | `0` |  | Unidades vendidas (ordenação por popularidade) |
 | `created_at` | datetime | não |  |  | Data/hora de criação |
 | `updated_at` | datetime | não |  |  | Data/hora de atualização |
