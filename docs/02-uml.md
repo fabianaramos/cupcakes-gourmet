@@ -58,7 +58,7 @@ classDiagram
 
 Classes de serviço (não persistidas): `Cart` (carrinho na sessão), `Checkout` (transforma carrinho em pedido), `PaymentSimulator`, `Shipping`.
 
-## 2.3 Sequência — finalizar pedido (US-010/US-011)
+## 2.3 Sequência: finalizar pedido (US-010/US-011)
 
 ```mermaid
 sequenceDiagram
@@ -101,7 +101,7 @@ stateDiagram-v2
   cancelado --> [*]
 ```
 
-## 2.5 Atividade — arquitetura MVC da aplicação
+## 2.5 Atividade: arquitetura MVC da aplicação
 
 ```mermaid
 flowchart LR

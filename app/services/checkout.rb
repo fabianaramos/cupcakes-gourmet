@@ -1,5 +1,5 @@
 # Transforma o carrinho em pedido: valida estoque, aplica cupom, calcula frete,
-# simula o pagamento e baixa o estoque — tudo em uma transação.
+# simula o pagamento e baixa o estoque, tudo em uma transação.
 class Checkout
   Result = Struct.new(:order, :errors) do
     def success? = errors.empty?

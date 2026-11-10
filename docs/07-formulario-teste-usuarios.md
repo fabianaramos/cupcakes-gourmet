@@ -3,7 +3,7 @@
 > Enviar para 5 colegas junto com o link da aplicação publicada e as contas de teste.
 > Sugestão: replicar estas perguntas num Google Forms com campo de **upload de captura de tela**.
 
-**Aplicação:** Cupcakes Gourmet — <LINK DA APLICAÇÃO>
+**Aplicação:** Cupcakes Gourmet: <LINK DA APLICAÇÃO>
 **Contas de teste:** cliente: crie a sua em "Cadastro" · admin: <fornecer por mensagem privada>
 
 ---
@@ -20,7 +20,7 @@
    - [ ] Acompanhar / cancelar pedido
    - [ ] Avaliar cupcake
    - [ ] Painel admin (cupcakes, estoque, pedidos, cupons, relatório)
-5. **O que testou e NÃO funcionou — e o que deve ser corrigido:**
+5. **O que testou e NÃO funcionou e o que deve ser corrigido:**
    (passo a passo para reproduzir, o que esperava, o que aconteceu, captura de tela)
 6. **Funcionalidade não testada:** qual e por quê (não encontrou, não existe, não teve tempo…)
 7. **Sugestões de melhoria (opcional):**
