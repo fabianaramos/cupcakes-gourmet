@@ -40,7 +40,7 @@ cats = %w[Tradicionais Gourmet Veganos Sem\ glúten].to_h { |n| [ n, Category.fi
     p.allergens = allerg
     p.stock = stock
     p.active = true
-  end
+  end.update!(image_url: "cupcakes/#{name.parameterize}.jpg")
 end
 
 Coupon.find_or_create_by!(code: "BEMVINDO10") { |c| c.kind = "percentual"; c.value = 10; c.valid_until = 1.year.from_now.to_date }

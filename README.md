@@ -1,4 +1,4 @@
-# 🧁 Cupcakes Gourmet: loja virtual
+# Cupcakes Gourmet: loja virtual
 
 Projeto Integrador Transdisciplinar em Engenharia de Software II (Cruzeiro do Sul Virtual).
 Implementação da especificação ágil do PIT I (22 histórias de usuário) como aplicação **web responsiva** em **Ruby on Rails (MVC)**.
@@ -45,13 +45,16 @@ Cupons: `BEMVINDO10` (10%) e `FRETE5` (R$ 5).
 bin/rails test
 ```
 
-## Publicação (ex.: Render.com, plano gratuito)
+## Publicação no Render (plano gratuito)
 
-1. Suba este repositório no GitHub.
-2. No Render, crie um **PostgreSQL** e um **Web Service** apontando para o repositório.
-3. Build command: `bundle install && bin/rails assets:precompile && bin/rails db:migrate && bin/rails db:seed`
-4. Start command: `bin/rails server -b 0.0.0.0 -p $PORT`
-5. Variáveis de ambiente: `DATABASE_URL` (do PostgreSQL), `RAILS_MASTER_KEY` (conteúdo de `config/master.key`), `RAILS_ENV=production`.
+O arquivo `render.yaml` descreve o banco PostgreSQL e o serviço web, e o `bin/render-build.sh` instala as dependências, compila os assets, roda as migrations e carrega os dados de demonstração.
+
+1. Suba o repositório no GitHub.
+2. No Render, clique em **New > Blueprint**, escolha o repositório e confirme.
+3. Quando o Render pedir `RAILS_MASTER_KEY`, cole o conteúdo de `config/master.key` (esse arquivo nunca vai para o GitHub).
+4. Aguarde o build terminar e abra a URL `https://<nome>.onrender.com`.
+
+Limitações do plano gratuito: o serviço "dorme" após 15 minutos sem acesso (o primeiro acesso depois disso leva cerca de 1 minuto) e o banco gratuito expira 30 dias após a criação.
 
 ## Estrutura
 

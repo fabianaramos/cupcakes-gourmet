@@ -22,25 +22,25 @@ Revisão da especificação ágil entregue no PIT I (22 histórias, 107 pontos) 
 
 | História | Situação | Onde |
 |---|---|---|
-| US-001 Cadastro de cliente | ✅ (sem login social e e-mail) | `RegistrationsController`, `User` |
-| US-002 Login do cliente | ✅ (bloqueio 5 tentativas/15 min; sem recuperação por e-mail) | `SessionsController` |
-| US-003 Logout | ✅ (expira após 30 min) | `ApplicationController#expire_idle_session` |
-| US-004 Vitrine | ✅ filtros por categoria e ordenação | `ProductsController#index` |
-| US-005 Detalhes | ✅ alérgenos destacados, avaliações | `ProductsController#show` |
-| US-006 Busca | ✅ parcial, ingredientes, sinônimos, sugestões | `Product.search` |
-| US-007 Adicionar ao carrinho | ✅ 1 a 50 un., limitado ao estoque | `Cart`, `CartsController` |
-| US-008 Remover do carrinho | ✅ com confirmação | `CartsController#remove` |
-| US-009 Cupom | ✅ 1 por pedido, máx. 50% | `Coupon`, `CartsController#apply_coupon` |
-| US-010 Checkout | ✅ mínimo R$ 25, frete por CEP, protocolo | `Checkout`, `Shipping` |
-| US-011 Pagamento | ⚠️ simulado | `PaymentSimulator` |
-| US-012 Acompanhar pedido | ✅ linha do tempo e histórico (sem push) | `OrdersController` |
-| US-013 Avaliar | ✅ após entrega, moderação, filtro de palavras | `Review` |
-| US-014 Cadastrar cupcake | ✅ nasce inativo (1 imagem) | `Admin::ProductsController` |
-| US-015 Estoque | ✅ alerta de mínimo, oculta sem estoque | `Admin::ProductsController#stock`, dashboard |
-| US-016 Status do pedido | ✅ sem pular etapas, histórico | `Order#advance!` |
-| US-017 Relatórios | ✅ dia/semana/mês, ticket médio, PDF via impressão | `Admin::ReportsController` |
-| US-018 Cancelar pedido | ✅ até "Confirmado", devolve estoque | `Order#cancel!` |
-| US-019 Data/horário | ✅ (sem expressa) | `Order` validações |
-| US-020 Cupons (admin) | ✅ busca e filtros | `Admin::CouponsController` |
-| US-021 Cadastro admin | ✅ e-mail corporativo, aprovação do superadmin (sem e-mail) | `Admin::RegistrationsController` |
-| US-022 Login admin | ✅ bloqueio após 3, sessão 15 min (sessão em vez de JWT) | `Admin::SessionsController` |
+| US-001 Cadastro de cliente | Sim (sem login social e e-mail) | `RegistrationsController`, `User` |
+| US-002 Login do cliente | Sim (bloqueio 5 tentativas/15 min; sem recuperação por e-mail) | `SessionsController` |
+| US-003 Logout | Sim (expira após 30 min) | `ApplicationController#expire_idle_session` |
+| US-004 Vitrine | Sim: filtros por categoria e ordenação | `ProductsController#index` |
+| US-005 Detalhes | Sim: alérgenos destacados, avaliações | `ProductsController#show` |
+| US-006 Busca | Sim: parcial, ingredientes, sinônimos, sugestões | `Product.search` |
+| US-007 Adicionar ao carrinho | Sim: 1 a 50 un., limitado ao estoque | `Cart`, `CartsController` |
+| US-008 Remover do carrinho | Sim: com confirmação | `CartsController#remove` |
+| US-009 Cupom | Sim: 1 por pedido, máx. 50% | `Coupon`, `CartsController#apply_coupon` |
+| US-010 Checkout | Sim: mínimo R$ 25, frete por CEP, protocolo | `Checkout`, `Shipping` |
+| US-011 Pagamento | Parcial: simulado | `PaymentSimulator` |
+| US-012 Acompanhar pedido | Sim: linha do tempo e histórico (sem push) | `OrdersController` |
+| US-013 Avaliar | Sim: após entrega, moderação, filtro de palavras | `Review` |
+| US-014 Cadastrar cupcake | Sim: nasce inativo (1 imagem) | `Admin::ProductsController` |
+| US-015 Estoque | Sim: alerta de mínimo, oculta sem estoque | `Admin::ProductsController#stock`, dashboard |
+| US-016 Status do pedido | Sim: sem pular etapas, histórico | `Order#advance!` |
+| US-017 Relatórios | Sim: dia/semana/mês, ticket médio, PDF via impressão | `Admin::ReportsController` |
+| US-018 Cancelar pedido | Sim: até "Confirmado", devolve estoque | `Order#cancel!` |
+| US-019 Data/horário | Sim (sem expressa) | `Order` validações |
+| US-020 Cupons (admin) | Sim: busca e filtros | `Admin::CouponsController` |
+| US-021 Cadastro admin | Sim: e-mail corporativo, aprovação do superadmin (sem e-mail) | `Admin::RegistrationsController` |
+| US-022 Login admin | Sim: bloqueio após 3, sessão 15 min (sessão em vez de JWT) | `Admin::SessionsController` |

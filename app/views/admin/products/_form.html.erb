@@ -12,7 +12,12 @@
     <div class="field"><%= f.label :stock %><%= f.number_field :stock, min: 0, required: true %></div>
     <div class="field"><%= f.label :min_stock %><%= f.number_field :min_stock, min: 0 %></div>
   </div>
-  <div class="field"><%= f.label :image_url %><%= f.url_field :image_url, placeholder: "https://..." %><span class="hint">Opcional. Sem imagem, a vitrine mostra uma ilustração.</span></div>
+  <div class="field">
+    <%= f.label :image_url %>
+    <%= f.text_field :image_url, list: "catalog-photos", placeholder: "cupcakes/baunilha-classico.jpg ou https://..." %>
+    <datalist id="catalog-photos"><% Product.catalog_photos.each do |photo| %><option value="<%= photo %>"></option><% end %></datalist>
+    <span class="hint">Opcional. Escolha uma foto do catálogo ou cole um link. Sem imagem, a vitrine mostra uma ilustração.</span>
+  </div>
   <label class="option"><%= f.check_box :active %> <span>Publicar na vitrine</span></label>
   <div class="actions">
     <button class="btn" type="submit">Salvar</button>

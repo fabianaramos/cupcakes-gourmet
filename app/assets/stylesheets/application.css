@@ -126,3 +126,119 @@ th { background: #f7eef1; font-size: .88rem; }
   body { background: #fff; }
 }
 .visually-hidden { position: absolute; width: 1px; height: 1px; overflow: hidden; clip: rect(0 0 0 0); white-space: nowrap; }
+
+/* Loja: visual de confeitaria (o painel admin continua com o estilo base acima) */
+body.store {
+  --bg: #fff8f1; --surface: #fff; --ink: #3a1420; --muted: #7a5a63; --line: #f3dbe2;
+  --brand: #c8174a; --brand-ink: #fff; --accent: #fde3ea; --wine: #7a0f2a; --blush: #fde3ea;
+  --pink: #f6b3c8; --pink-light: #ffc9da; --radius: 20px;
+  font-family: "DM Sans", system-ui, -apple-system, "Segoe UI", Roboto, sans-serif;
+}
+.store a { color: var(--wine); }
+.store h1, .store h2, .store .serif { font-family: "DM Serif Display", Georgia, serif; font-weight: 400; color: var(--wine); letter-spacing: -.01em; }
+.store h1 { font-size: 2.2rem; line-height: 1.1; }
+.store h2 { font-size: 1.7rem; }
+.eyebrow { display: block; font-size: .74rem; font-weight: 700; letter-spacing: .14em; text-transform: uppercase; color: var(--wine); }
+
+.store .promo-bar { background: var(--wine); color: var(--pink-light); text-align: center; font-size: .78rem; letter-spacing: .04em; padding: 7px 16px; }
+.store .promo-bar strong { color: #fff; }
+.store .topbar { background: var(--bg); color: var(--wine); border-bottom: 1px solid var(--line); }
+.store .brand { font-family: "Bagel Fat One", "DM Serif Display", Georgia, serif; font-weight: 400; font-size: 1.7rem; line-height: 1; color: var(--wine); text-decoration: none; letter-spacing: -.01em; }
+.store .nav a, .store .nav .linklike { color: var(--wine); font-size: .78rem; font-weight: 700; letter-spacing: .12em; text-transform: uppercase; text-decoration: none; }
+.store .cart-link { display: inline-flex; align-items: center; gap: 6px; background: transparent; border: 1.5px solid var(--wine); padding: 5px 12px; }
+.store .cart-link svg { width: 16px; height: 16px; }
+
+.store .btn { background: var(--brand); color: #fff; padding: 11px 24px; font-weight: 700; font-size: .85rem; letter-spacing: .08em; text-transform: uppercase; transition: background .15s; }
+.store .btn:hover { filter: none; background: var(--wine); }
+.store .btn-outline { background: transparent; color: var(--wine); border: 1.5px solid var(--wine); }
+.store .btn-outline:hover { background: var(--wine); color: #fff; }
+.store .btn-danger { background: var(--err); }
+
+.store .card { border: 1px solid var(--line); box-shadow: 0 6px 20px rgba(122, 15, 42, .05); }
+.store .product-card { padding: 12px; border-radius: 24px; overflow: visible; }
+.store .product-card .body { padding: 14px 6px 4px; gap: 4px; }
+.store .product-card h3 { font-family: "DM Serif Display", Georgia, serif; font-weight: 400; font-size: 1.35rem; }
+.store .product-card h3 a { color: var(--wine); }
+.store .product-card .price { font-family: "DM Serif Display", Georgia, serif; font-weight: 400; color: var(--wine); font-size: 1.3rem; margin: 4px 0 8px; }
+.store .thumb-wrap { position: relative; display: block; }
+.store .thumb { border-radius: 16px; background: var(--blush); aspect-ratio: 1; }
+.store .sticker { position: absolute; top: -6px; right: -6px; width: 74px; height: 74px; display: grid; place-items: center; text-align: center;
+  background: var(--brand); color: #fff; border: 3px solid var(--pink-light); border-radius: 50%; font-size: .66rem; font-weight: 700;
+  line-height: 1.1; text-transform: uppercase; letter-spacing: .04em; transform: rotate(-12deg); box-shadow: 0 4px 10px rgba(122, 15, 42, .2); }
+.store .tag { background: none; color: var(--muted); padding: 0; font-size: .72rem; font-weight: 700; letter-spacing: .14em; text-transform: uppercase; }
+.store .product-card .tag { align-self: flex-start; }
+.store .product-card .btn { font-size: .76rem; letter-spacing: .05em; padding: 11px 10px; white-space: nowrap; }
+.store .hero-img { border-radius: 28px; background: var(--blush); }
+.store .placeholder { font-family: "DM Serif Display", Georgia, serif; color: var(--wine); font-size: 4rem; background: var(--blush); }
+
+.store .filters { background: var(--surface); border: 1px solid var(--line); border-radius: 24px; padding: 14px 16px 2px; }
+.store { overflow-x: clip; }
+.search-band { background: var(--blush); }
+.search-band-inner { max-width: 1100px; margin: 0 auto; padding: 28px 16px 6px; }
+.search-band .filters { margin-bottom: 0; background: none; border: 0; border-radius: 0; padding: 0; box-shadow: none; }
+.search-band .filters input, .search-band .filters select { border-color: #f1c4d3; }
+.search-band .chips { margin: 18px 0; }
+.search-band + main { padding-top: 28px; }
+.checker-flush { margin-top: 0; height: 24px; background-size: 24px 24px; }
+.store .chips { justify-content: center; margin: 18px 0 24px; }
+.store .chip { border: 1.5px solid var(--wine); color: var(--wine); background: transparent; font-size: .74rem; font-weight: 700; letter-spacing: .1em; text-transform: uppercase; padding: 7px 16px; }
+.store .chip.on { background: var(--wine); border-color: var(--wine); color: #fff; }
+.store .field label { color: var(--wine); }
+.store .field input, .store .field select, .store .field textarea, .store .filters input, .store .filters select { border: 1.5px solid var(--line); border-radius: 12px; background: #fff; }
+.store .field input:focus, .store .field select:focus, .store .field textarea:focus { outline-color: var(--wine); }
+.store fieldset, .store .option { border-color: var(--line); }
+.store th { background: var(--blush); color: var(--wine); }
+.store .table-wrap { border-color: var(--line); }
+.store .allergens { background: var(--blush); color: var(--wine); border-left: 4px solid var(--brand); border-radius: 12px; }
+.store .flash { border-radius: 14px; }
+
+.hero { background: var(--wine); color: var(--pink-light); position: relative; padding: 36px 0 84px; }
+.hero::after { content: ""; position: absolute; left: 0; right: 0; bottom: -58px; height: 60px; z-index: 1;
+  background: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 240 60' fill='%237a0f2a'%3E%3Crect width='240' height='14'/%3E%3Cpath d='M18 8v26a8.0 8.0 0 0 0 16 0V8z'/%3E%3Cpath d='M12 14q6 0 6 6v-12h-6z M40 14q-6 0 -6 6v-12h6z'/%3E%3Cpath d='M70 8v12a6.0 6.0 0 0 0 12 0V8z'/%3E%3Cpath d='M64 14q6 0 6 6v-12h-6z M88 14q-6 0 -6 6v-12h6z'/%3E%3Cpath d='M108 8v34a9.0 9.0 0 0 0 18 0V8z'/%3E%3Cpath d='M102 14q6 0 6 6v-12h-6z M132 14q-6 0 -6 6v-12h6z'/%3E%3Cpath d='M166 8v18a6.0 6.0 0 0 0 12 0V8z'/%3E%3Cpath d='M160 14q6 0 6 6v-12h-6z M184 14q-6 0 -6 6v-12h6z'/%3E%3Cpath d='M198 8v26a8.0 8.0 0 0 0 16 0V8z'/%3E%3Cpath d='M192 14q6 0 6 6v-12h-6z M220 14q-6 0 -6 6v-12h6z'/%3E%3C/svg%3E") left top / 240px 60px repeat-x; }
+.hero-inner { display: grid; gap: 28px; align-items: center; }
+.hero.has-photo { background: linear-gradient(180deg, rgba(122, 15, 42, .92) 0 55%, rgba(122, 15, 42, .55)), var(--hero-bg) center 30% / cover no-repeat, var(--wine); min-height: 460px; display: flex; align-items: center; }
+.hero.has-photo .hero-inner { width: 100%; }
+.hero h1 { font-size: clamp(2.4rem, 7vw, 4rem); line-height: 1.02; margin: 10px 0 14px; color: #fff8f1; }
+.hero h1, .hero .eyebrow { font-family: "Bagel Fat One", "DM Serif Display", Georgia, serif; font-weight: 400; }
+.hero h1 { letter-spacing: -.01em; line-height: 1.05; }
+.hero .eyebrow { color: var(--pink); font-size: 1rem; letter-spacing: .06em; }
+.hero .btn { background: #fff8f1; color: var(--wine); }
+.hero .btn:hover { background: var(--pink-light); color: var(--wine); }
+.hero p { font-size: 1.05rem; max-width: 30em; margin: 0 0 24px; color: var(--pink-light); }
+.hero-photo { position: relative; justify-self: center; width: min(280px, 75vw); }
+.hero-photo img { width: 100%; aspect-ratio: 4 / 5; object-fit: cover; border-radius: 28px; display: block; box-shadow: 0 20px 40px rgba(122, 15, 42, .18); }
+.hero-photo .sticker { top: -14px; right: -14px; width: 88px; height: 88px; font-size: .72rem; }
+
+.section-title { text-align: center; margin: 36px auto 18px; }
+.hero + .section-title { margin-top: 84px; }
+.section-title h2 { margin: 6px 0 0; font-size: clamp(1.8rem, 5vw, 2.6rem); }
+.breadcrumb { margin: 20px 0 14px; }
+.breadcrumb a { text-decoration: none; }
+.store .detail .price { font-family: "DM Serif Display", Georgia, serif; font-size: 2rem; color: var(--wine); margin: 0 0 12px; }
+.store details { border-bottom: 1px solid var(--pink); padding: 12px 0; }
+.store summary { cursor: pointer; font-size: .78rem; font-weight: 700; letter-spacing: .12em; text-transform: uppercase; color: var(--wine); list-style: none; display: flex; justify-content: space-between; }
+.store summary::after { content: "+"; font-size: 1.2rem; line-height: 1; }
+.store details[open] summary::after { content: "−"; }
+.store details p { margin: 10px 0 0; }
+.store .qty-input { width: 80px; padding: 8px; border-radius: 12px; border: 1.5px solid var(--line); font: inherit; }
+
+.checker { height: 32px; margin-top: 56px;
+  background: conic-gradient(var(--wine) 25%, var(--pink) 0 50%, var(--wine) 0 75%, var(--pink) 0) 0 0 / 32px 32px; }
+.store .footer { background: var(--wine); color: var(--pink-light); max-width: none; margin: 0; padding: 40px 16px 0; overflow: hidden; }
+.store .footer a { color: #fff; text-decoration: none; }
+.footer-cols { max-width: 1100px; margin: 0 auto; display: grid; gap: 24px; grid-template-columns: 1fr; font-size: .92rem; }
+.footer-cols h3 { font-family: "DM Serif Display", Georgia, serif; font-weight: 400; font-size: 1.5rem; color: var(--pink); margin: 0 0 8px; }
+.footer-cols ul { list-style: none; padding: 0; margin: 0; display: grid; gap: 6px; }
+.wordmark { font-family: "Bagel Fat One", "DM Serif Display", Georgia, serif; color: var(--pink-light); font-size: clamp(3.5rem, 17vw, 13rem); line-height: .9; text-align: center; margin: 30px 0 -.12em; letter-spacing: -.02em; white-space: nowrap; }
+.footer-base { background: var(--bg); color: var(--wine); text-align: center; font-size: .7rem; font-weight: 700; letter-spacing: .12em; text-transform: uppercase; padding: 14px 16px; }
+
+@media (min-width: 760px) {
+  .hero { padding: 56px 0 100px; }
+  .hero-inner { grid-template-columns: 1.15fr 1fr; }
+  .hero-photo { width: 340px; }
+  .hero.has-photo { background: linear-gradient(90deg, var(--wine) 0 40%, rgba(122, 15, 42, 0) 62%), var(--hero-bg) right 30% / 60% auto no-repeat, var(--wine); min-height: 560px; }
+    .footer-cols { grid-template-columns: 1.4fr 1fr 1fr; }
+}
+@media (prefers-reduced-motion: reduce) {
+  .store .btn { transition: none; }
+}

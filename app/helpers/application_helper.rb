@@ -12,7 +12,7 @@ module ApplicationHelper
       image_tag(product.image_url, alt: product.name, class: css, loading: "lazy")
     else
       hue = (product.id.to_i * 47) % 360
-      content_tag(:div, "🧁", class: "#{css} placeholder", style: "--hue: #{hue}", role: "img", aria: { label: product.name })
+      content_tag(:div, product.name.first, class: "#{css} placeholder", style: "--hue: #{hue}", role: "img", aria: { label: product.name })
     end
   end
 

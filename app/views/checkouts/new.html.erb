@@ -54,7 +54,7 @@
     <aside class="card summary">
       <h2 style="margin-top:0">4. Resumo</h2>
       <ul style="padding-left:18px">
-        <% @lines.each do |l| %><li><%= l.quantity %>× <%= l.product.name %> — <%= money(l.total) %></li><% end %>
+        <% @lines.each do |l| %><li><%= l.quantity %>× <%= l.product.name %> - <%= money(l.total) %></li><% end %>
       </ul>
       <dl>
         <dt>Subtotal</dt><dd><%= money(@subtotal) %></dd>

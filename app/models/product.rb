@@ -26,7 +26,11 @@ class Product < ApplicationRecord
   validates :price, numericality: { greater_than: 0 }
   validates :stock, numericality: { only_integer: true, greater_than_or_equal_to: 0, message: "não pode ser negativo" }
   validates :min_stock, numericality: { only_integer: true, greater_than_or_equal_to: 0 }
-  validates :image_url, format: { with: %r{\Ahttps?://\S+\z}, message: "deve começar com http:// ou https://" }, allow_blank: true
+  validate :image_url_must_be_link_or_catalog_photo
+
+  def self.catalog_photos
+    Dir[Rails.root.join("app/assets/images/cupcakes/*.{jpg,jpeg,png,webp}")].map { |f| "cupcakes/#{File.basename(f)}" }.sort
+  end
 
   scope :available, -> { where(active: true).where("stock > 0") }
   scope :low_stock, -> { where("stock <= min_stock") }
@@ -50,5 +54,12 @@ class Product < ApplicationRecord
 
   def average_rating
     reviews.where(approved: true).average(:rating)&.round(1)
+  end
+
+  private
+
+  def image_url_must_be_link_or_catalog_photo
+    return if image_url.blank? || image_url.match?(%r{\Ahttps?://\S+\z}) || self.class.catalog_photos.include?(image_url)
+    errors.add(:image_url, "deve ser uma foto do catálogo ou um link começando com http:// ou https://")
   end
 end
