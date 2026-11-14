@@ -24,7 +24,7 @@ class Checkout
     if @params[:coupon_code].present?
       coupon = Coupon.find_by(code: @params[:coupon_code].strip.upcase)
       return Result.new(order, [ "Cupom inválido." ]) if coupon.nil?
-      return Result.new(order, [ coupon.unusable_reason ]) unless coupon.usable?
+      return Result.new(order, [ coupon.unusable_reason_for(@user) ]) unless coupon.usable_by?(@user)
     end
 
     ActiveRecord::Base.transaction do

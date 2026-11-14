@@ -26,6 +26,15 @@ class Coupon < ApplicationRecord
     nil
   end
 
+  # Cada cliente usa o mesmo cupom uma vez só (pedido cancelado libera o cupom de novo).
+  def used_by?(user) = user.present? && orders.counted_as_sale.exists?(user: user)
+
+  def unusable_reason_for(user)
+    unusable_reason || ("Você já usou este cupom em outro pedido." if used_by?(user))
+  end
+
+  def usable_by?(user) = unusable_reason_for(user).nil?
+
   def discount_for(subtotal)
     raw = kind == "percentual" ? subtotal * value / 100 : value
     [ raw, subtotal * MAX_DISCOUNT_SHARE ].min.round(2)

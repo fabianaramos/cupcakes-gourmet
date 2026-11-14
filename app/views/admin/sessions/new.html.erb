@@ -2,7 +2,7 @@
   <h1>Acesso administrativo</h1>
   <%= form_with url: admin_login_path, class: "card" do %>
     <div class="field"><label for="email">E-mail corporativo</label><input type="email" id="email" name="email" value="<%= params[:email] %>" required autocomplete="username"></div>
-    <div class="field"><label for="password">Senha</label><input type="password" id="password" name="password" required autocomplete="current-password"></div>
+    <div class="field"><label for="password">Senha</label><%= password_toggle { tag.input(type: "password", id: "password", name: "password", required: true, autocomplete: "current-password", data: { password_toggle_target: "input" }) } %></div>
     <button class="btn btn-block" type="submit">Entrar no painel</button>
   <% end %>
   <p class="muted">Novo administrador? <%= link_to "Solicitar cadastro", admin_signup_path %></p>

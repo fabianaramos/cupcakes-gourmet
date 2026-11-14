@@ -5,7 +5,12 @@ module Admin
     def index
       @status = params[:status].presence
       scope = Order.recent.includes(:user)
-      scope = @status ? scope.where(status: @status) : scope.active
+      scope =
+        case @status
+        when nil then scope.active
+        when "todos" then scope
+        else scope.where(status: @status)
+        end
       @orders = paginate(scope)
     end
 

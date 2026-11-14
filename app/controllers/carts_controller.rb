@@ -41,8 +41,8 @@ class CartsController < ApplicationController
       redirect_to cart_path, notice: "Cupom removido."
     elsif coupon.nil?
       redirect_to cart_path, alert: "Cupom inválido."
-    elsif !coupon.usable?
-      redirect_to cart_path, alert: coupon.unusable_reason
+    elsif !coupon.usable_by?(current_user)
+      redirect_to cart_path, alert: coupon.unusable_reason_for(current_user)
     else
       session[:coupon_code] = coupon.code # CA US-009#3: apenas um cupom por pedido
       redirect_to cart_path, notice: "Cupom #{coupon.code} aplicado (#{coupon.label})."

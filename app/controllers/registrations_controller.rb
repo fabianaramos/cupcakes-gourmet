@@ -7,7 +7,10 @@ class RegistrationsController < ApplicationController
   def create
     @user = User.new(user_params.merge(role: "cliente"))
     @address = @user.addresses.build(address_params)
-    if @user.save
+    address_ok = @address.valid?
+    user_ok = @user.valid?
+    @user.errors.delete(:addresses)
+    if user_ok && address_ok && @user.save
       sign_in(@user)
       redirect_to(session.delete(:return_to) || root_path, notice: "Cadastro realizado! Bem-vindo(a), #{@user.name.split.first}.")
     else

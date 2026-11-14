@@ -20,7 +20,7 @@ erDiagram
 
 ## 3.2 Projeto lógico (normalizado até a 3FN)
 
-- **users**(<u>id</u>, name, email*, password_digest, cpf*, phone, role, approved, failed_attempts, locked_until)
+- **users**(<u>id</u>, name, email*, password_digest, cpf*, phone, role, approved, failed_attempts, locked_until, active)
 - **addresses**(<u>id</u>, #user_id, cep, street, number, complement, neighborhood, city, state)
 - **categories**(<u>id</u>, name*)
 - **products**(<u>id</u>, #category_id, name*, description, ingredients, allergens, price, stock, min_stock, active, image_url, sold_count)

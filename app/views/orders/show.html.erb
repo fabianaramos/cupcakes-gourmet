@@ -44,16 +44,16 @@
 
     <h2>Itens</h2>
     <div class="table-wrap">
-      <table>
+      <table class="stack-table">
         <thead><tr><th>Cupcake</th><th>Qtd.</th><th class="right">Total</th><% if @order.delivered? %><th>Avaliar</th><% end %></tr></thead>
         <tbody>
         <% @items.each do |item| %>
           <tr>
-            <td><%= item.product.name %></td>
-            <td><%= item.quantity %></td>
-            <td class="right"><%= money(item.total) %></td>
+            <td data-label="Cupcake"><%= item.product.name %></td>
+            <td data-label="Qtd."><%= item.quantity %></td>
+            <td class="right" data-label="Total"><%= money(item.total) %></td>
             <% if @order.delivered? %>
-              <td>
+              <td class="stack-full" data-label="Avaliar">
                 <% if @reviewed_ids.include?(item.product_id) %>
                   <span class="muted">Avaliado ✓</span>
                 <% else %>
@@ -79,7 +79,7 @@
     <h2 style="margin-top:0">Resumo</h2>
     <dl>
       <dt>Subtotal</dt><dd><%= money(@order.subtotal) %></dd>
-      <% if @order.discount.positive? %><dt>Desconto</dt><dd>– <%= money(@order.discount) %></dd><% end %>
+      <% if @order.discount.positive? %><dt>Desconto<%= " (cupom #{@order.coupon.code})" if @order.coupon %></dt><dd>– <%= money(@order.discount) %></dd><% end %>
       <dt>Frete</dt><dd><%= money(@order.shipping) %></dd>
       <dt class="total">Total</dt><dd class="total"><%= money(@order.total) %></dd>
     </dl>

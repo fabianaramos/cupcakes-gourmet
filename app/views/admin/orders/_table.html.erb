@@ -14,7 +14,8 @@
         <td class="right"><%= money(o.total) %></td>
         <td>
           <% if (nxt = o.next_status) %>
-            <%= button_to "→ #{Order::STATUS_LABELS[nxt]}", advance_admin_order_path(o), method: :patch, class: "btn btn-sm" %>
+            <%= button_to "→ #{Order::STATUS_LABELS[nxt]}", advance_admin_order_path(o), method: :patch, class: "btn btn-sm",
+                  form: { data: { turbo_confirm: "Avançar o pedido #{o.number} para \"#{Order::STATUS_LABELS[nxt]}\"? Essa ação não pode ser desfeita." } } %>
           <% end %>
         </td>
       </tr>

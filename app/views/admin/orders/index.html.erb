@@ -1,6 +1,7 @@
 <h1>Pedidos</h1>
 <nav class="chips">
   <%= link_to "Em andamento", admin_orders_path, class: "chip #{'on' if @status.nil?}" %>
+  <%= link_to "Todos", admin_orders_path(status: "todos"), class: "chip #{'on' if @status == 'todos'}" %>
   <% Order::STATUSES.each do |st| %>
     <%= link_to Order::STATUS_LABELS[st], admin_orders_path(status: st), class: "chip #{'on' if @status == st}" %>
   <% end %>

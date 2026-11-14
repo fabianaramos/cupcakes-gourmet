@@ -97,4 +97,27 @@ class ShoppingFlowTest < ActionDispatch::IntegrationTest
     get order_path(order)
     assert_redirected_to orders_path
   end
+  test "campos de senha têm botão para mostrar a senha" do
+    get signup_path
+    assert_select "[data-controller=password-toggle] button.password-eye[aria-label='Mostrar senha']", 2
+    get login_path
+    assert_select "button.password-eye", 1
+  end
+  test "CEP inválido no cadastro mostra a mensagem do endereço em português" do
+    post signup_path, params: {
+      user: { name: "Nova Cliente", email: "cep@teste.com", cpf: "111.444.777-35", phone: "11988887777",
+              password: "senha1234", password_confirmation: "senha1234" },
+      address: { cep: "123", street: "Rua A", number: "1", neighborhood: "Centro", city: "São Paulo", state: "SP" }
+    }
+    assert_response :unprocessable_entity
+    assert_select ".error-box li", text: "CEP deve ter 8 dígitos"
+    assert_no_match "Addresses", response.body
+    assert_equal 0, User.where(email: "cep@teste.com").count
+  end
+  test "cadastro com máscaras e busca de endereço pelo CEP" do
+    get signup_path
+    assert_select "input#user_cpf[data-mask-pattern-value=cpf]"
+    assert_select "input#user_phone[data-mask-pattern-value=phone]"
+    assert_select "[data-controller=cep] input#address_cep[data-mask-pattern-value=cep]"
+  end
 end

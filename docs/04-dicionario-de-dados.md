@@ -18,6 +18,7 @@ Pessoas que acessam o sistema: clientes, administradores e superadministrador.
 | `approved` | boolean | não | `true` |  | Admin aprovado pelo superadmin (clientes nascem aprovados) |
 | `failed_attempts` | integer | não | `0` |  | Tentativas de login inválidas seguidas |
 | `locked_until` | datetime | sim |  |  | Bloqueado até esta data/hora |
+| `active` | boolean | não | `true` |  | Admin desativado pelo superadmin perde o acesso ao painel |
 | `created_at` | datetime | não |  |  | Data/hora de criação |
 | `updated_at` | datetime | não |  |  | Data/hora de atualização |
 

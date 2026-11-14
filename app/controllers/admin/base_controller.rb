@@ -8,7 +8,7 @@ module Admin
     private
 
     def require_staff!
-      return if current_user&.staff? && current_user.approved?
+      return if current_user&.staff? && current_user.approved? && current_user.active?
       redirect_to admin_login_path, alert: "Acesso restrito ao painel administrativo."
     end
 

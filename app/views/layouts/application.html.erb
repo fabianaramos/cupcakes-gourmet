@@ -4,6 +4,8 @@
     <title><%= content_for(:title) || "Cupcakes Gourmet" %></title>
     <meta name="viewport" content="width=device-width,initial-scale=1">
     <meta name="theme-color" content="#7a0f2a">
+    <meta name="turbo-refresh-method" content="morph">
+    <meta name="turbo-refresh-scroll" content="preserve">
     <%= csrf_meta_tags %>
     <%= csp_meta_tag %>
     <link rel="preconnect" href="https://fonts.googleapis.com">
@@ -32,12 +34,17 @@
         </nav>
       </div>
     </header>
+    <div class="toasts" aria-live="polite">
+      <% flash.each do |type, msg| %>
+        <div class="flash flash-<%= type %>" role="<%= type == 'alert' ? 'alert' : 'status' %>" data-controller="dismiss">
+          <span><%= msg %></span>
+          <button type="button" class="toast-close" aria-label="Fechar mensagem" data-action="dismiss#close">×</button>
+        </div>
+      <% end %>
+    </div>
     <%= yield :hero %>
     <%= yield :band %>
     <main class="wrap">
-      <% flash.each do |type, msg| %>
-        <div class="flash flash-<%= type %>" role="<%= type == 'alert' ? 'alert' : 'status' %>"><%= msg %></div>
-      <% end %>
       <%= yield %>
     </main>
     <div class="checker" aria-hidden="true"></div>

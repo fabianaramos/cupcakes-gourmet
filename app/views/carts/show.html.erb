@@ -8,19 +8,19 @@
 <% else %>
   <div class="layout-2">
     <div class="table-wrap">
-      <table>
+      <table class="cart-table">
         <thead><tr><th>Cupcake</th><th>Qtd.</th><th class="right">Total</th><th><span class="visually-hidden">Ações</span></th></tr></thead>
         <tbody>
         <% @lines.each do |line| %>
           <tr>
-            <td><%= link_to line.product.name, product_path(line.product) %><br><span class="muted"><%= money(line.product.price) %> cada</span></td>
+            <td class="cart-name"><%= link_to line.product.name, product_path(line.product) %><br><span class="muted"><%= money(line.product.price) %> cada</span></td>
             <td>
               <%= form_with url: update_cart_path(line.product.id), method: :patch, class: "qty-form" do %>
                 <input type="number" name="quantity" value="<%= line.quantity %>" min="1" max="<%= [50, line.product.stock].min %>" aria-label="Quantidade de <%= line.product.name %>" onchange="this.form.requestSubmit()">
               <% end %>
             </td>
-            <td class="right"><%= money(line.total) %></td>
-            <td><%= button_to "Remover", remove_cart_path(line.product.id), method: :delete, class: "btn btn-outline btn-sm",
+            <td class="right cart-total"><%= money(line.total) %></td>
+            <td class="cart-remove"><%= button_to "Remover", remove_cart_path(line.product.id), method: :delete, class: "btn btn-outline btn-sm",
                               form: { data: { turbo_confirm: "Remover #{line.product.name} do carrinho?" } } %></td>
           </tr>
         <% end %>

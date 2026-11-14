@@ -3,7 +3,8 @@ module Admin
     before_action :set_product, only: %i[edit update destroy stock]
 
     def index
-      @products = Product.includes(:category).order(:name)
+      @sort = params[:ordem] == "estoque" ? "estoque" : "nome"
+      @products = Product.includes(:category).order(@sort == "estoque" ? { stock: :asc, name: :asc } : { name: :asc })
       @products = @products.search(params[:q]) if params[:q].present?
     end
 
