@@ -75,4 +75,68 @@ class AdminFlowTest < ActionDispatch::IntegrationTest
     post admin_login_path, params: { email: @admin.email, password: "Admin@12345" }
     assert_select ".flash-alert", /bloqueada/
   end
+  test "superadmin desativa admin, que perde o acesso ao painel" do
+    superadmin = create_admin(role: "superadmin")
+    login_admin
+    get admin_root_path
+    assert_response :success
+
+    open_session do |sup|
+      sup.post admin_login_path, params: { email: superadmin.email, password: "Admin@12345" }
+      sup.patch deactivate_admin_user_path(@admin)
+      sup.patch deactivate_admin_user_path(superadmin)
+      sup.follow_redirect!
+      assert_match "não pode desativar a própria conta", sup.response.body
+    end
+    assert_not @admin.reload.active?
+    assert superadmin.reload.active?
+
+    get admin_root_path
+    assert_redirected_to admin_login_path
+    post admin_login_path, params: { email: @admin.email, password: "Admin@12345" }
+    assert_select ".flash-alert", /desativado/
+  end
+
+  test "filtro Todos nos pedidos e confirmação ao avançar status" do
+    client = create_client(email: "todos@teste.com")
+    product = create_product(price: 15)
+    order = place_order(client, product, qty: 2).order
+    order.update_columns(status: "entregue")
+    login_admin
+    get admin_orders_path
+    assert_no_match order.number, response.body
+    get admin_orders_path(status: "todos")
+    assert_match order.number, response.body
+
+    other = place_order(client, product, qty: 2).order
+    get admin_orders_path
+    assert_select "form[data-turbo-confirm*='#{other.number}']"
+  end
+
+  test "cupcakes ordenados pelo menor estoque" do
+    create_product(name: "Muito", stock: 90)
+    create_product(name: "Pouco", stock: 1)
+    login_admin
+    get admin_products_path(ordem: "estoque")
+    names = css_select("tbody tr td:first-child").map { |td| td.text.strip }
+    assert_equal "Pouco", names.first
+  end
+
+  test "pedido mostra o cupom usado; cupcakes com situação colorida e prévia da imagem" do
+    client = create_client(email: "cupom@teste.com")
+    product = create_product(price: 15)
+    create_product(name: "Escondido", active: false)
+    Coupon.create!(code: "VERDE10", kind: "percentual", value: 10, valid_until: Date.tomorrow)
+    order = place_order(client, product, qty: 2, coupon_code: "VERDE10").order
+    login_admin
+    get admin_order_path(order)
+    assert_match "cupom VERDE10", response.body
+
+    get admin_products_path
+    assert_select "span.situacao-publicado", text: "Publicado"
+    assert_select "span.situacao-inativo", text: "Inativo"
+
+    get edit_admin_product_path(product)
+    assert_select "[data-controller='image-preview'] figure.image-preview img"
+  end
 end

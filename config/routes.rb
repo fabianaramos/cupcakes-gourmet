@@ -50,6 +50,8 @@ Rails.application.routes.draw do
     resources :users, only: :index, path: "administradores" do
       patch :approve, on: :member
       patch :unlock, on: :member
+      patch :deactivate, on: :member
+      patch :reactivate, on: :member
     end
     get "relatorios", to: "reports#index", as: :reports      # US-017
   end

@@ -5,10 +5,18 @@
   <% @users.each do |u| %>
     <tr>
       <td><%= u.name %></td><td><%= u.email %></td><td><%= u.role %></td>
-      <td><%= !u.approved? ? "Aguardando aprovação" : (u.locked? ? "Bloqueado (tentativas inválidas)" : "Ativo") %></td>
+      <td><%= !u.active? ? "Desativado" : (!u.approved? ? "Aguardando aprovação" : (u.locked? ? "Bloqueado (tentativas inválidas)" : "Ativo")) %></td>
       <td>
         <%= button_to "Aprovar", approve_admin_user_path(u), method: :patch, class: "btn btn-sm" unless u.approved? %>
         <%= button_to "Desbloquear", unlock_admin_user_path(u), method: :patch, class: "btn btn-sm btn-outline" if u.locked? %>
+        <% if u != current_user %>
+          <% if u.active? %>
+            <%= button_to "Desativar", deactivate_admin_user_path(u), method: :patch, class: "btn btn-sm btn-danger",
+                          form: { data: { turbo_confirm: "Desativar #{u.name}? Essa pessoa não conseguirá mais entrar no painel." } } %>
+          <% else %>
+            <%= button_to "Reativar", reactivate_admin_user_path(u), method: :patch, class: "btn btn-sm btn-outline" %>
+          <% end %>
+        <% end %>
       </td>
     </tr>
   <% end %>

@@ -4,16 +4,16 @@
   <div class="card empty"><p>Você ainda não fez pedidos.</p><%= link_to "Ver vitrine", root_path, class: "btn" %></div>
 <% else %>
   <div class="table-wrap">
-    <table>
+    <table class="stack-table">
       <thead><tr><th>Pedido</th><th>Data</th><th>Entrega</th><th>Status</th><th class="right">Total</th></tr></thead>
       <tbody>
       <% @orders.each do |o| %>
         <tr>
-          <td><%= link_to o.number, order_path(o) %></td>
-          <td><%= l(o.created_at, format: :short) %></td>
-          <td><%= l(o.delivery_date) %></td>
-          <td><%= status_badge(o) %></td>
-          <td class="right"><%= money(o.total) %></td>
+          <td data-label="Pedido"><%= link_to o.number, order_path(o) %></td>
+          <td data-label="Data"><%= l(o.created_at, format: :short) %></td>
+          <td data-label="Entrega"><%= l(o.delivery_date) %></td>
+          <td data-label="Status"><%= status_badge(o) %></td>
+          <td class="right" data-label="Total"><%= money(o.total) %></td>
         </tr>
       <% end %>
       </tbody>

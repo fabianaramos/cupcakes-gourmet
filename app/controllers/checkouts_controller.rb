@@ -35,7 +35,7 @@ class CheckoutsController < ApplicationController
     @selected_address_id ||= @addresses.first&.id
     @coupon = Coupon.find_by(code: session[:coupon_code]) if session[:coupon_code]
     @subtotal = @lines.sum(&:total)
-    @discount = @coupon&.usable? ? @coupon.discount_for(@subtotal) : 0
+    @discount = @coupon&.usable_by?(current_user) ? @coupon.discount_for(@subtotal) : 0
     @shipping_by_address = @addresses.to_h { |a| [ a.id, Shipping.price_for(a.cep) ] }
   end
 

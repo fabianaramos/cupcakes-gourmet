@@ -1,13 +1,17 @@
+<div data-controller="cep">
 <div class="row row-2">
-  <div class="field"><%= a.label :cep %><%= a.text_field :cep, required: true, inputmode: "numeric", placeholder: "00000-000", autocomplete: "postal-code" %></div>
-  <div class="field"><%= a.label :state %><%= a.select :state, Address::STATES, { include_blank: "Selecione" }, required: true %></div>
+  <div class="field"><%= a.label :cep %><%= a.text_field :cep, required: true, inputmode: "numeric", placeholder: "00000-000", autocomplete: "postal-code", maxlength: 9,
+        data: { controller: "mask", mask_pattern_value: "cep", action: "input->mask#format input->cep#lookup", cep_target: "cep" }, aria: { describedby: "cep-status" } %>
+    <span class="hint" id="cep-status" data-cep-target="status" aria-live="polite">Digite o CEP para preencher o endereço.</span></div>
+  <div class="field"><%= a.label :state %><%= a.select :state, Address::STATES, { include_blank: "Selecione" }, required: true, data: { cep_target: "state" } %></div>
 </div>
 <div class="row row-3">
-  <div class="field"><%= a.label :street %><%= a.text_field :street, required: true, autocomplete: "address-line1" %></div>
-  <div class="field"><%= a.label :number %><%= a.text_field :number, required: true %></div>
+  <div class="field"><%= a.label :street %><%= a.text_field :street, required: true, autocomplete: "address-line1", data: { cep_target: "street" } %></div>
+  <div class="field"><%= a.label :number %><%= a.text_field :number, required: true, data: { cep_target: "number" } %></div>
   <div class="field"><%= a.label :complement %><%= a.text_field :complement %></div>
 </div>
 <div class="row row-2">
-  <div class="field"><%= a.label :neighborhood %><%= a.text_field :neighborhood, required: true %></div>
-  <div class="field"><%= a.label :city %><%= a.text_field :city, required: true, autocomplete: "address-level2" %></div>
+  <div class="field"><%= a.label :neighborhood %><%= a.text_field :neighborhood, required: true, data: { cep_target: "neighborhood" } %></div>
+  <div class="field"><%= a.label :city %><%= a.text_field :city, required: true, autocomplete: "address-level2", data: { cep_target: "city" } %></div>
+</div>
 </div>

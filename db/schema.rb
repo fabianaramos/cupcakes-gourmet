@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[8.1].define(version: 2026_11_09_100009) do
+ActiveRecord::Schema[8.1].define(version: 2026_11_11_100010) do
   create_table "addresses", force: :cascade do |t|
     t.integer "user_id", null: false
     t.string "cep", limit: 8, null: false
@@ -144,6 +144,7 @@ ActiveRecord::Schema[8.1].define(version: 2026_11_09_100009) do
     t.datetime "locked_until"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
+    t.boolean "active", default: true, null: false
     t.index ["cpf"], name: "index_users_on_cpf", unique: true
     t.index ["email"], name: "index_users_on_email", unique: true
     t.check_constraint "role IN ('cliente','admin','superadmin')", name: "users_role_check"

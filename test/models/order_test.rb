@@ -42,6 +42,21 @@ class OrderTest < ActiveSupport::TestCase
     assert_equal 1, coupon.reload.used_count
   end
 
+  test "cada cliente usa o mesmo cupom uma vez só; pedido cancelado libera o cupom" do
+    Coupon.create!(code: "UMAVEZ", kind: "percentual", value: 10, valid_until: Date.tomorrow, usage_limit: 10)
+    first = place_order(@client, @product, qty: 3, coupon_code: "UMAVEZ")
+    assert first.success?
+
+    again = place_order(@client, @product, qty: 3, coupon_code: "UMAVEZ")
+    assert_not again.success?
+    assert_includes again.errors, "Você já usou este cupom em outro pedido."
+
+    assert place_order(create_client, @product, qty: 3, coupon_code: "UMAVEZ").success?, "outro cliente pode usar"
+
+    first.order.update_columns(status: "cancelado")
+    assert place_order(@client, @product, qty: 3, coupon_code: "UMAVEZ").success?
+  end
+
   test "checkout recusa quantidade acima do estoque" do
     @product.update!(stock: 3)
     cart = Cart.new({})
